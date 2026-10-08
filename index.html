@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAKAMATSU 2026 - 行程指南</title>
+  <!-- Noto Serif SC & Inter Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dusty-rose: #C49A88;
+      --sage-green: #90A08A;
+      --fog-blue: #889DB0;
+      --warm-taupe: #B5A89B;
+      --charcoal-gray: #2F3336;
+      --bg-cream: #FAF9F6;
+      --card-bg: #FFFFFF;
+      --card-border: #E8E6E1;
+      --accent-soft: #F2EFE9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Serif SC', 'Inter', serif;
+      background-color: var(--bg-cream);
+      color: var(--charcoal-gray);
+      line-height: 1.7;
+      padding: 2rem 1rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--charcoal-gray);
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      color: var(--warm-taupe);
+      text-transform: uppercase;
+    }
+
+    /* Navigation / Day Selector */
+    .day-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .day-nav button {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--charcoal-gray);
+      padding: 0.5rem 1.2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .day-nav button:hover, .day-nav button.active {
+      background: var(--charcoal-gray);
+      color: #FFFFFF;
+      border-color: var(--charcoal-gray);
+    }
+
+    /* Day Section */
+    .day-section {
+      margin-bottom: 3.5rem;
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+
+    .day-badge {
+      background-color: var(--fog-blue);
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .day-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--charcoal-gray);
+      letter-spacing: 0.05em;
+    }
+
+    /* Timeline Structure */
+    .timeline {
+      position: relative;
+      padding-left: 1.5rem;
+      border-left: 1px solid var(--card-border);
+    }
+
+    .event-card {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .event-card::before {
+      content: '';
+      position: absolute;
+      left: -1.85rem;
+      top: 1.5rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--warm-taupe);
+      border: 2px solid var(--bg-cream);
+    }
+
+    .event-card.highlight::before {
+      background-color: var(--dusty-rose);
+    }
+
+    .event-time {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--sage-green);
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.03em;
+    }
+
+    .event-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--charcoal-gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .event-details {
+      font-size: 0.9rem;
+      color: #555555;
+    }
+
+    .event-details p {
+      margin-bottom: 0.25rem;
+    }
+
+    .event-details p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Meta Items Tagging */
+    .meta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .meta-item {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      background-color: var(--accent-soft);
+      border-radius: 4px;
+      color: var(--charcoal-gray);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .meta-item.mapcode {
+      background-color: #EBF2F7;
+      color: #2B546A;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .meta-item.price {
+      background-color: #F7EFEB;
+      color: #7A422B;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem 0.5rem;
+      }
+      .event-card {
+        padding: 1rem;
+      }
+      .timeline {
+        padding-left: 1rem;
+      }
+      .event-card::before {
+        left: -1.35rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>TAKAMATSU 2026</h1>
+      <p>四國與瀨戶內海跳島之旅</p>
+    </header>
+
+    <div class="day-nav">
+      <button onclick="scrollToDay('day1')">Day 1</button>
+      <button onclick="scrollToDay('day2')">Day 2</button>
+      <button onclick="scrollToDay('day3')">Day 3</button>
+      <button onclick="scrollToDay('day4')">Day 4</button>
+      <button onclick="scrollToDay('day5')">Day 5</button>
+      <button onclick="scrollToDay('day6')">Day 6</button>
+      <button onclick="scrollToDay('day7')">Day 7</button>
+    </div>
+
+    <!-- DAY 1 -->
+    <div id="day1" class="day-section">
+      <div class="day-header">
+        <span class="day-badge">DAY 1</span>
+        <h2 class="day-title">高松抵達與綾川、琴平巡禮</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="event-card">
+          <div class="event-time">09:45 – 11:10</div>
+          <div class="event-title">JL477 航班抵達高松，辦理取車</div>
+          <div class="event-details">
+            <p>抵達高松機場，前往租車櫃檯辦理取車手續。</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">12:30 – 13:00</div>
+          <div class="event-title">高松機場 → ヤドン公園駐車場</div>
+          <div class="event-details">
+            <p>地址：〒761-2304 香川県綾歌郡綾川町萱原253-7（小羽毛池跡）</p>
+            <p>電話：+81 878-76-5280</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 228 877 247*20</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">13:00 – 13:30</div>
+          <div class="event-title">呆呆獸公園（通称「ヤドン公園」）</div>
+          <div class="event-details">
+            <p>參觀香川縣特有的呆呆獸主題公園。</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">13:30 – 14:00</div>
+          <div class="event-title">移動至 金刀比羅宮 Nice Parking</div>
+          <div class="event-details">
+            <p>地址：〒766-0001 Kagawa, Nakatado District, Kotohira, 川西７４５−１</p>
+            <p>電話：+81 087-885-0114</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 停車場 Mapcode: 77 353 864*26</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">14:00 – 15:30</div>
+          <div class="event-title">金刀比羅宮</div>
+          <div class="event-details">
+            <p>地址：〒766-8501 香川県仲多度郡琴平町892-1</p>
+            <p>電話：+81 877-75-2121</p>
+            <p>參拜一生必去一次的金刀比羅宮，挑戰參道石階。</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">15:40 – 16:15</div>
+          <div class="event-title">移動至 四國水族館 停車場</div>
+          <div class="event-details">
+            <p>地址：〒769-0201 香川県綾歌郡宇多津町浜一番丁4番地</p>
+            <p>電話：+81 0877-49-4590</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 77 832 128*42</span>
+              <span class="meta-item mapcode">📍 停車場 Mapcode: 77 802 757*45</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">16:30 – 18:00</div>
+          <div class="event-title">四國水族館</div>
+          <div class="event-details">
+            <p>營業時間：9:00 - 18:00</p>
+            <p>欣賞夕陽景致與四國水域主題展區。</p>
+            <div class="meta-group">
+              <span class="meta-item price">🎫 大人 2,600日圓</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">19:00</div>
+          <div class="event-title">Check-in：Fav Hotel</div>
+          <div class="event-details">
+            <p>地址：〒760-0062 香川県高松市塩上町２丁目４−２０</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 60 607 301*65</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div id="day2" class="day-section">
+      <div class="day-header">
+        <span class="day-badge">DAY 2</span>
+        <h2 class="day-title">小豆島探索之旅</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="event-card">
+          <div class="event-time">07:00 – 07:15</div>
+          <div class="event-title">移動至 高松のりば（小豆島フェリー高松営業所）</div>
+          <div class="event-details">
+            <p>地址：香川県高松市サンポート8-22 サンポート高松 フェリーセンター内</p>
+            <p>電話：087-822-4383</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 60 666 095*58</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">08:02 – 09:02</div>
+          <div class="event-title">渡輪：高松 → 土庄 (小豆島)</div>
+          <div class="event-details">
+            <p>搭乘小豆島渡輪前往土庄港。</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">09:05 – 09:15</div>
+          <div class="event-title">小豆島観光協会（土庄港観光案内所）</div>
+          <div class="event-details">
+            <p>地址：〒761-4101 香川県小豆郡土庄町甲6194-11（土庄港渡輪轉運站大樓內）</p>
+            <p>電話：+81 879-82-1775</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 364 846 213*08</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">09:15 – 09:30</div>
+          <div class="event-title">移動至 中山千枚田 臨時駐車場</div>
+          <div class="event-details">
+            <p>地址：〒761-4303 香川県小豆郡小豆島町中山</p>
+            <p>電話：+81 0879-82-1775（小豆島觀光協會）</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 364 884 883*85</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">09:30 – 10:15</div>
+          <div class="event-title">中山千枚田 (擁抱小豆島)</div>
+          <div class="event-details">
+            <p>梯田景觀漫步。</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">10:15 – 10:30</div>
+          <div class="event-title">移動至 天使之路 第一駐車場</div>
+          <div class="event-details">
+            <p>地址：〒761-4106 香川県小豆郡土庄町甲24-92</p>
+            <p>電話：+81 0879-62-2801 (天使之路商店)</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 364 787 899*84</span>
+              <span class="meta-item mapcode">📍 停車場 Mapcode: 364 817 118*45</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">10:45 – 11:30</div>
+          <div class="event-title">天使の散歩道 (エンジェルロード)</div>
+          <div class="event-details">
+            <p>・白天最佳潮汐時段：05:12 ～ 11:12（乾潮高峰 08:12）</p>
+            <p>・傍晚/夜間潮汐時段：17:30 ～ 23:30（乾潮高峰 20:30）</p>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">11:45 – 12:45</div>
+          <div class="event-title">午餐：小豆島ラーメン Hishio エンジェルロード店</div>
+          <div class="event-details">
+            <p>地址：〒761-4100 香川県小豆郡土庄町甲24-18</p>
+            <p>電話：+81 0879-62-8720</p>
+            <p>營業時間：11:00～20:00 (LO 17:45)</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">12:50</div>
+          <div class="event-title">富丘八幡神社</div>
+          <div class="event-details">
+            <p>地址：〒761-4121 香川県小豆郡土庄町渕崎甲2421</p>
+            <p>電話：0879-62-1538</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 364 818 833*57</span>
+              <span class="meta-item mapcode">📍 鳥居前入口: 364 818 798*73</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">13:00 – 13:20</div>
+          <div class="event-title">移動至 道の駅 第3駐車場（小豆島オリーブ公園）</div>
+          <div class="event-details">
+            <p>地址：〒761-4434 香川県小豆郡小豆島町西村甲1941-1</p>
+            <p>電話：+81 879-82-2200</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 364 798 305*82</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">13:30 – 15:00</div>
+          <div class="event-title">橄欖公園 (道の駅 小豆島オリーブ公園)</div>
+          <div class="event-details">
+            <p>營業時間：8:30 - 17:00</p>
+            <p>參觀白色風車與橄欖園。</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">15:15 – 15:30</div>
+          <div class="event-title">移動至 丸金醬油紀念館停車場</div>
+          <div class="event-details">
+            <p>位於紀念館與物產館兩側道路旁。</p>
+            <p>地址：〒761-4421 香川県小豆郡小豆島町苗羽甲1850</p>
+            <p>電話：+81 0879-82-1011（小豆島町商工會）</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 364 773 589*62</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">13:30 – 15:00</div>
+          <div class="event-title">丸金醬油紀念館 醤の郷（ひしおのさと）</div>
+          <div class="event-details">
+            <p>營業時間：9:00 - 16:00</p>
+            <div class="meta-group">
+              <span class="meta-item price">🎫 大人 500円</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">13:30 – 15:00</div>
+          <div class="event-title">Edit x seven Setouchi Shodoshima</div>
+          <div class="event-details">
+            <p>地址：〒761-4411 香川県小豆郡小豆島町安田甲144-21</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 364 802 800*16</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div id="day3" class="day-section">
+      <div class="day-header">
+        <span class="day-badge">DAY 3</span>
+        <h2 class="day-title">豐島藝術巡禮與宇野</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="event-card highlight">
+          <div class="event-time">12:00 – 12:05</div>
+          <div class="event-title">Minori Gelato</div>
+          <div class="event-details">
+            <p>地址：〒761-4432 香川県小豆郡小豆島町草壁本町1055-2</p>
+            <p>電話：+81 0879-62-8181</p>
+            <p>營業時間：12:00～18:00 (LO 17:45)｜定休日：週三、週四</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 364 831 124*37</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">12:05 – 12:30</div>
+          <div class="event-title">移動至 土庄港 小豆島豊島フェリー碼頭</div>
+          <div class="event-details">
+            <p>地址：〒761-4101 香川県小豆郡土庄町甲</p>
+            <p>電話：+81 87-962-1348</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 364 846 300*51</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">13:10 – 13:40</div>
+          <div class="event-title">渡輪：土庄 (小豆島) → 唐櫃 (豊島)</div>
+          <div class="event-details">
+            <p>所要時間：約30分鐘</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">13:45 – 13:50</div>
+          <div class="event-title">移動至 豐島美術館與梯田專用停車場</div>
+          <div class="event-details">
+            <p>地址：〒 香川県小豆郡土庄町豊島唐櫃1771</p>
+            <p>電話：+81 879683555</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 871 251 334*74</span>
+              <span class="meta-item mapcode">📍 停車場 Mapcode: 871 251 333*31</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">14:00 – 16:00</div>
+          <div class="event-title">唐櫃 | 豊島美術館</div>
+          <div class="event-details">
+            <p>營業時間：10:00 〜 16:00 (最終入館 15:30)｜休館日：週二</p>
+            <div class="meta-group">
+              <span class="meta-item price">🎫 線上 1,800円 / 現場 2,000円</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">16:00</div>
+          <div class="event-title">唐櫃 | 豐島美術館前山坡賞梯田、海景</div>
+          <div class="event-details">
+            <p>沿著「縣道255號」的坡地制高點可以俯瞰波光粼粼的瀨戶內海。</p>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">16:05</div>
+          <div class="event-title">唐櫃 | 藝術作品：多重籃框</div>
+          <div class="event-details">
+            <p>作品名：勝者はいない─マルチ・バスケットボール</p>
+            <p>地址：〒 香川県小豆郡土庄町豊島唐櫃2614</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 871 252 273*08</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">16:05</div>
+          <div class="event-title">唐櫃 | 心臟音的資料館 (Les Archives du Coeur)</div>
+          <div class="event-details">
+            <p>地址：〒 香川県小豆郡土庄町豊島唐櫃2801-1</p>
+            <p>營業時間：10:00 〜 16:00 (最終入館 15:30)｜休館日：週二</p>
+            <div class="meta-group">
+              <span class="meta-item price">🎫 線上 600円 / 現場 700円</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">15:20</div>
+          <div class="event-title">移動至 唐櫃港 渡輪售票處</div>
+          <div class="event-details">
+            <p>小豆島豊島フェリー唐櫃港チケット売り場</p>
+            <p>地址：〒761-4662 香川県小豆郡土庄町豊島唐櫃２５３０−１１</p>
+            <p>電話：+81 87-968-3239</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 871 251 383*71</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">18:20 – 19:19</div>
+          <div class="event-title">渡輪：唐櫃 (豊島) → 宇野</div>
+          <div class="event-details">
+            <p>所要時間：約59分鐘</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">19:19 – 19:25</div>
+          <div class="event-title">Check-in：Yado Storo</div>
+          <div class="event-details">
+            <p>地址：〒706-0011 岡山県玉野市宇野2丁目4-8（或 宇野3丁目10-3 鄰近巷弄）</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 19 082 173*77</span>
+              <span class="meta-item mapcode">📍 宇野站前區域: 19 082 165*65</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div id="day4" class="day-section">
+      <div class="day-header">
+        <span class="day-badge">DAY 4</span>
+        <h2 class="day-title">直島現代藝術朝聖之旅</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="event-card">
+          <div class="event-time">07:45 – 07:50</div>
+          <div class="event-title">移動至 四國汽船 宇野港渡輪售票處</div>
+          <div class="event-details">
+            <p>地址：岡山県玉野市築港1丁目3-2番地</p>
+            <p>電話：0863-31-1641（出航前30分鐘開始發售）</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 19 264 704*85 / 19 264 705*67</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">08:22 – 08:42</div>
+          <div class="event-title">渡輪：宇野 → 宮浦 (直島)</div>
+          <div class="event-details">
+            <p>所要時間：約20分鐘</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">08:50</div>
+          <div class="event-title">直島町立宮浦港停車場</div>
+          <div class="event-details">
+            <p>地址：〒761-3110 香川県香川郡直島町宮ノ浦2249-22</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 19 147 516*51</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">08:50 – 09:30</div>
+          <div class="event-title">宮浦港 | 紅南瓜、海邊驛站、直島展覽館</div>
+          <div class="event-details">
+            <p>欣賞草間彌生紅南瓜與周邊港口地標建築。</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">09:40 – 09:45</div>
+          <div class="event-title">移動至 地中美術館 停車場</div>
+          <div class="event-details">
+            <p>地址：〒 香川県香川郡直島町3449−1</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 停車場 Mapcode: 19 118 560*02</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">10:00 – 11:00</div>
+          <div class="event-title">地中美術館</div>
+          <div class="event-details">
+            <p>營業時間：10:00 〜 17:00 (最終入館 16:00)｜休館日：週一</p>
+            <div class="meta-group">
+              <span class="meta-item price">🎫 假日線上 2,700円 / 當日 3,000円</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">10:00 – 11:00</div>
+          <div class="event-title">李禹煥美術館</div>
+          <div class="event-details">
+            <p>地址：〒 香川県香川郡直島町字倉浦1390</p>
+            <p>營業時間：10:00 〜 17:00 (最終入館 16:00)｜休館日：週一</p>
+            <div class="meta-group">
+              <span class="meta-item price">🎫 線上 1,200円 / 現場 1,400円</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">11:30 – 12:30</div>
+          <div class="event-title">直島當代美術館 – 倍樂生之家 (Benesse House)</div>
+          <div class="event-details">
+            <p>地址：〒 香川県香川郡直島町3419</p>
+            <p>營業時間：08:00 〜 21:00 (最終入館 20:00)｜全年無休</p>
+            <div class="meta-group">
+              <span class="meta-item price">🎫 線上 1,300円 / 現場 1,500円</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">11:45</div>
+          <div class="event-title">Valley Gallery (NA25-B)</div>
+          <div class="event-details">
+            <p>參觀 Valley Gallery 展區。</p>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">12:00</div>
+          <div class="event-title">杉本博司時間的迴廊 (Hiroshi Sugimoto Gallery: Time Corridors)</div>
+          <div class="event-details">
+            <p>★ 已預約 12:00 入館 (含茶點 Tea and sweets included)</p>
+            <p>營業時間：11:00 〜 15:00 (最終入館 14:00)｜全年無休</p>
+            <div class="meta-group">
+              <span class="meta-item price">🎫 線上 1,600円 / 現場 1,700円</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">12:30</div>
+          <div class="event-title">草間彌生 黃南瓜 (黄かぼちゃ)</div>
+          <div class="event-details">
+            <p>海岸地標黃南瓜拍照。</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">12:45</div>
+          <div class="event-title">恵美須神社</div>
+          <div class="event-details">
+            <p>神社參拜。</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">13:18 – 13:32</div>
+          <div class="event-title">接駁車：Tsutsuji-so → 地中美術館 停車場</div>
+          <div class="event-details">
+            <p>班次選擇：12:53 - 13:07 或 13:18 - 13:32</p>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">13:45</div>
+          <div class="event-title">移動至 本村地區無料駐車場</div>
+          <div class="event-details">
+            <p>地址：3299-34 Honmura, Naoshima, Kagawa District, Kagawa 761-3110</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 停車場 Mapcode: 871 120 512*22</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">13:45 – 14:30</div>
+          <div class="event-title">午餐：カフェサロン中奥</div>
+          <div class="event-details">
+            <p>特色：咖哩蛋包飯</p>
+            <p>地址：〒761-3110 香川縣香川郡直島町本村中奧1167</p>
+            <p>電話：+81 087-892-3887</p>
+            <p>營業時間：週三至週日 11:30-15:00 (LO 14:40) / 17:30-21:00 (LO 20:30)</p>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">14:45 – 15:45</div>
+          <div class="event-title">本村 | 直島新美術館</div>
+          <div class="event-details">
+            <p>地址：〒 香川県香川郡直島町3419</p>
+            <p>營業時間：10:00 ～ 16:30 (最終入館 16:00)</p>
+            <div class="meta-group">
+              <span class="meta-item price">🎫 線上 1,500円 / 現場 1,700円</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">16:00</div>
+          <div class="event-title">Naoshima Gelato (直島ジェラート)</div>
+          <div class="event-details">
+            <p>地址：〒 香川県香川郡直島町843-1</p>
+            <p>營業時間：13:00 ~ 17:00</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 871 120 873*86</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">16:05 – 16:15</div>
+          <div class="event-title">移動至 直島町立宮浦港停車場</div>
+          <div class="event-details">
+            <p>地址：〒761-3110 香川県香川郡直島町宮ノ浦2249-22</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 19 147 516*51</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">16:15</div>
+          <div class="event-title">四國汽船 直島 宮浦港 <フェリー切符売り場></div>
+          <div class="event-details">
+            <p>地址：〒761-3110 香川県香川郡直島町2249-40</p>
+            <p>電話：087-892-3104</p>
+            <div class="meta-group">
+              <span class="meta-item mapcode">📍 Mapcode: 19 147 398*26</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card highlight">
+          <div class="event-time">16:20 – 16:35</div>
+          <div class="event-title">宮浦 |「I♥湯」錢湯</div>
+          <div class="event-details">
+            <p>地址：〒 香川県香川郡直島町2252-2</p>
+            <p>營業時間：13:00 〜 21:00 (最終受付 20:30)</p>
+            <p>・浴室見學會：每週六、日及公眾假期 13:00 - 15:50</p>
+            <div class="meta-group">
+              <span class="meta-item price">🎫 660円</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="event-card">
+          <div class="event-time">17:00 – 18:00</div>
+          <div class="event-title">渡輪：直島（宮浦）→ 高松</div>
+          <div class="event-details">
+            <p>所要時間：約60分鐘</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DAY 5 -->
+    <div id="day5" class="day-section">
+      <div class="day-header">
+        <span class="day-badge">DAY 5</span>
+        <h2 class="day-title">還車與自由時間</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="event-card">
+          <div class="event-time">12:30</div>
+          <div class="event-title">辦理還車</div>
+          <div class="event-details">
+            <p>完成自駕車輛歸還手續。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DAY 6 -->
+    <div id="day6" class="day-section">
+      <div class="day-header">
+        <span class="day-badge">DAY 6</span>
+        <h2 class="day-title">大阪主題樂園之旅</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="event-card highlight">
+          <div class="event-time">08:30 – 20:00</div>
+          <div class="event-title">USJ (日本環球影城)</div>
+          <div class="event-details">
+            <p>全日遊玩日本環球影城。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DAY 7 -->
+    <div id="day7" class="day-section">
+      <div class="day-header">
+        <span class="day-badge">DAY 7</span>
+        <h2 class="day-title">賦歸</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="event-card">
+          <div class="event-time">20:40 – 23:50</div>
+          <div class="event-title">搭機回港</div>
+          <div class="event-details">
+            <p>結束四國與瀨戶內海之旅，搭機返回香港。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function scrollToDay(dayId) {
+      const element = document.getElementById(dayId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  </script>
+</body>
+</html>
