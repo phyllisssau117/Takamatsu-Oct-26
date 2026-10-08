@@ -2,817 +2,1884 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TAKAMATSU 2026 - 行程規劃</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Takamatsu Oct 2026</title>
+  <!-- Noto Serif SC 字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons (極簡風圖示庫) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
+    /* ===================================================
+       1. 主題配色變數 (莫蘭迪色系)
+       =================================================== */
     :root {
-      --bg-color: #F9F9F6;
-      --card-bg: #FFFFFF;
-      --primary-text: #2C2C2C;
-      --secondary-text: #595959;
-      --accent-gold: #C5A059;
-      --accent-sage: #8A9A86;
-      --accent-fog-blue: #6C829B;
-      --accent-taupe: #9E8C7C;
-      --border-color: #E2E2DC;
-      --tag-bg: #F0F0EB;
+      /* 預設為 Dusty Rose 乾玫瑰粉 */
+      --bg-main: #f9f6f6;
+      --card-bg: #ffffff;
+      --card-sub-bg: #fdfafb;
+      --primary: #c48b9f;
+      --primary-light: #f4eaee;
+      --primary-dark: #9e6479;
+      --border-color: #ebdbe2;
+      --text-main: #332c2e;
+      --text-muted: #8c7b83;
+      --shadow: rgba(196, 139, 159, 0.15);
+      --font-family: 'Noto Serif SC', serif;
     }
 
+    [data-theme="sage-green"] {
+      --bg-main: #f5f7f5;
+      --card-bg: #ffffff;
+      --card-sub-bg: #f8faf8;
+      --primary: #8fa89b;
+      --primary-light: #eaf0ec;
+      --primary-dark: #648272;
+      --border-color: #d6e0da;
+      --text-main: #2b332f;
+      --text-muted: #73857b;
+      --shadow: rgba(143, 168, 155, 0.15);
+    }
+
+    [data-theme="fog-blue"] {
+      --bg-main: #f4f7f9;
+      --card-bg: #ffffff;
+      --card-sub-bg: #f7f9fb;
+      --primary: #8ba5b7;
+      --primary-light: #e8f0f5;
+      --primary-dark: #5c7b91;
+      --border-color: #d2e0e9;
+      --text-main: #293138;
+      --text-muted: #708494;
+      --shadow: rgba(139, 165, 183, 0.15);
+    }
+
+    [data-theme="warm-taupe"] {
+      --bg-main: #f8f6f3;
+      --card-bg: #ffffff;
+      --card-sub-bg: #faf8f5;
+      --primary: #b09e90;
+      --primary-light: #f2ede8;
+      --primary-dark: #877364;
+      --border-color: #e5dcd4;
+      --text-main: #36302b;
+      --text-muted: #877b72;
+      --shadow: rgba(176, 158, 144, 0.15);
+    }
+
+    [data-theme="charcoal-gray"] {
+      --bg-main: #f3f4f5;
+      --card-bg: #ffffff;
+      --card-sub-bg: #f7f8f9;
+      --primary: #78828a;
+      --primary-light: #eaedef;
+      --primary-dark: #4d5760;
+      --border-color: #d8dee3;
+      --text-main: #25282a;
+      --text-muted: #6b747c;
+      --shadow: rgba(120, 130, 138, 0.15);
+    }
+
+    /* ===================================================
+       2. 通用樣式與 Reset
+       =================================================== */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: var(--font-family);
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      font-family: "Noto Serif SC", "Noto Serif TC", "Source Han Serif", serif;
-      background-color: var(--bg-color);
-      color: var(--primary-text);
-      line-height: 1.8;
-      letter-spacing: 0.05em;
-      padding: 20px 12px;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-size: 16px;
+      line-height: 1.6;
+      padding-bottom: 40px;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    .container {
-      max-width: 800px;
+    .app-container {
+      max-width: 480px;
       margin: 0 auto;
+      padding: 16px 20px;
+      min-height: 100vh;
     }
 
-    /* Header Styling */
-    header {
-      text-align: center;
-      padding: 40px 20px 30px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    header h1 {
-      font-size: 1.8rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      color: var(--primary-text);
-      margin-bottom: 8px;
-    }
-
-    header p {
-      font-size: 0.9rem;
-      color: var(--secondary-text);
-      letter-spacing: 0.1em;
-    }
-
-    /* Sticky Tab Navigation */
-    .tab-nav {
+    /* 置頂大標題與主題選擇器 */
+    .header-bar {
       display: flex;
-      justify-content: flex-start;
-      overflow-x: auto;
-      white-space: nowrap;
-      position: sticky;
-      top: 0;
-      background-color: var(--bg-color);
-      z-index: 100;
-      padding: 10px 0;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border-color);
-      -webkit-overflow-scrolling: touch;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-top: 10px;
     }
 
-    .tab-nav::-webkit-scrollbar {
-      display: none;
+    .app-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
     }
 
-    .tab-btn {
-      background: none;
-      border: none;
-      font-family: inherit;
-      font-size: 0.9rem;
-      color: var(--secondary-text);
-      padding: 8px 16px;
-      margin-right: 8px;
-      cursor: pointer;
+    .theme-selector {
+      display: flex;
+      gap: 6px;
+      background: var(--card-bg);
+      padding: 6px 10px;
       border-radius: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .theme-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.2s;
+    }
+
+    .theme-dot:active { transform: scale(1.2); }
+    .theme-dot.active { border-color: var(--text-main); transform: scale(1.1); }
+
+    .dot-dusty-rose { background-color: #c48b9f; }
+    .dot-sage-green { background-color: #8fa89b; }
+    .dot-fog-blue { background-color: #8ba5b7; }
+    .dot-warm-taupe { background-color: #b09e90; }
+    .dot-charcoal-gray { background-color: #78828a; }
+
+    /* 主導航分頁 (Top Nav) */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 6px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .nav-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: none;
+      background: transparent;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn i { width: 16px; height: 16px; }
+
+    .nav-btn.active {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    /* 卡片通用樣式 */
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 16px var(--shadow);
       transition: all 0.3s ease;
     }
 
-    .tab-btn.active {
-      background-color: var(--accent-taupe);
-      color: #FFFFFF;
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
     }
 
-    /* Day Schedule Layout */
-    .day-section {
-      display: none;
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
     }
 
-    .day-section.active {
-      display: block;
+    .card-title i { width: 18px; height: 18px; color: var(--primary); }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: color 0.2s;
     }
 
-    .day-title {
-      font-size: 1.2rem;
-      font-weight: 500;
-      margin-bottom: 20px;
-      padding-left: 10px;
-      border-left: 3px solid var(--accent-taupe);
-      color: var(--primary-text);
+    .icon-btn:hover { color: var(--primary-dark); }
+
+    /* Input & Textarea */
+    input[type="text"], input[type="number"], select, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-sub-bg);
+      color: var(--text-main);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s, background-color 0.2s;
     }
 
-    /* Timeline Item Container */
-    .timeline {
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      background-color: #ffffff;
+    }
+
+    /* 頁面切換內容控制 */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ===================================================
+       3. 儀表板 (Dashboard - 首頁)
+       =================================================== */
+    /* 匯率計算機 */
+    .calc-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .input-group {
       position: relative;
-      padding-left: 20px;
-      border-left: 1px dashed var(--border-color);
-      margin-left: 10px;
     }
 
-    .timeline-item {
-      position: relative;
-      margin-bottom: 20px;
+    .input-label {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .input-group input {
+      padding-left: 70px;
+      text-align: right;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .calc-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .rate-formula { color: var(--text-muted); }
+    .tax-badge {
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    /* 一週天氣預報 */
+    .weather-grid {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .weather-item {
+      flex: 0 0 calc(20% - 8px);
+      min-width: 70px;
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 10px 6px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .weather-item .day { font-size: 12px; color: var(--text-muted); }
+    .weather-item .icon { font-size: 22px; margin: 2px 0; }
+    .weather-item .temp { font-size: 13px; font-weight: 600; }
+
+    /* 模式切換鈕 (入境 / 自駕) */
+    .mode-switch-container {
+      display: flex;
+      background: var(--card-sub-bg);
+      padding: 4px;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 16px;
+    }
+
+    .mode-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
       background: var(--card-bg);
-      border-radius: 8px;
+      color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .upload-box {
+      border: 2px dashed var(--border-color);
+      border-radius: 14px;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: var(--card-sub-bg);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .upload-box img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .upload-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .btn-action {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+
+    .btn-action:active { background-color: var(--border-color); }
+
+    /* 自駕模式速記磚 */
+    .tiles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .tile-item {
+      background: var(--primary-light);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .tile-sub { font-size: 12px; color: var(--text-muted); }
+    .tile-main { font-size: 18px; font-weight: 700; color: var(--primary-dark); margin-top: 2px; }
+
+    .driving-rules {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .rule-tag {
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin-right: 6px;
+      color: #ffffff;
+    }
+
+    .bg-stop { background-color: #d96b6b; }
+    .bg-wait { background-color: #e6a15c; }
+    .bg-walk { background-color: #63a375; }
+
+    /* 航班資訊卡片 */
+    .flight-nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .flight-tab {
+      flex: 1;
+      padding: 8px 4px;
+      border: 1px solid var(--border-color);
+      background: var(--card-sub-bg);
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .flight-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .flight-display {
+      background: var(--card-sub-bg);
+      border-radius: 14px;
       padding: 16px;
       border: 1px solid var(--border-color);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
 
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -26px;
-      top: 20px;
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background-color: var(--accent-taupe);
-      border: 2px solid var(--bg-color);
-    }
-
-    .time-badge {
-      font-size: 0.85rem;
-      color: var(--accent-fog-blue);
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      margin-bottom: 4px;
-    }
-
-    .item-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--primary-text);
+    .flight-route {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 8px;
     }
 
-    .item-details {
-      font-size: 0.85rem;
-      color: var(--secondary-text);
-      line-height: 1.6;
+    .airport { font-size: 22px; font-weight: 700; }
+
+    .flight-line-container {
+      flex: 1;
+      margin: 0 16px;
+      text-align: center;
+      position: relative;
     }
 
-    .detail-row {
-      margin-top: 4px;
-      word-break: break-all;
+    .flight-line {
+      height: 2px;
+      background: var(--border-color);
+      margin: 6px 0;
+      position: relative;
     }
 
-    .highlight-tag {
-      display: inline-block;
-      background-color: var(--tag-bg);
-      color: var(--accent-sage);
+    .flight-line::after {
+      content: '✈';
+      position: absolute;
+      right: 50%;
+      top: 50%;
+      transform: translate(50%, -50%);
+      background: var(--card-sub-bg);
+      padding: 0 4px;
+      font-size: 12px;
+      color: var(--primary-dark);
+    }
+
+    .flight-duration { font-size: 12px; color: var(--text-muted); }
+    .flight-no { font-size: 12px; font-weight: 700; color: var(--primary-dark); }
+
+    .flight-times {
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    /* ===================================================
+       4. 行程區塊 (Itinerary)
+       =================================================== */
+    /* Timeline Tabs */
+    .day-tabs-container {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      scrollbar-width: none;
+    }
+
+    .day-tabs-container::-webkit-scrollbar { display: none; }
+
+    .day-tab {
+      flex: 0 0 auto;
+      padding: 8px 18px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: all 0.2s;
+    }
+
+    .day-tab.active {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px var(--primary);
+    }
+
+    /* 天氣與操作列 */
+    .itinerary-sub-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .weather-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .sort-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 1px solid var(--primary-light);
+      color: var(--primary-dark);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* 行程卡片清單 */
+    .item-card-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .sort-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sort-arrow {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .item-card {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 4px 12px var(--shadow);
+      position: relative;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .time-badge {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .category-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .item-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .item-detail {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .guide-tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0;
+    }
+
+    .guide-tag {
+      font-size: 12px;
+      font-weight: 600;
       padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      margin-top: 6px;
-      margin-right: 4px;
-      font-weight: 500;
+      border-radius: 6px;
     }
 
-    .price-tag {
-      color: var(--accent-gold);
+    .tag-food { background: #fde8e8; color: #c84b4b; }
+    .tag-menu { background: #fef3c7; color: #b45309; }
+    .tag-gift { background: #e0e7ff; color: #3730a3; }
+    .tag-code { background: #dcfce7; color: #166534; }
+
+    .item-notes {
+      font-size: 13px;
+      background: var(--card-sub-bg);
+      padding: 10px;
+      border-radius: 10px;
+      border-left: 3px solid var(--primary);
+      margin-top: 8px;
     }
 
-    a {
-      color: var(--accent-fog-blue);
+    .nav-nav-btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 8px;
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
       text-decoration: none;
     }
 
-    a:hover {
-      text-decoration: underline;
+    /* 懸浮新增按鈕 (Floating Action Button) */
+    .fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--text-main);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+      cursor: pointer;
+      border: none;
+      z-index: 90;
     }
 
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border-color);
-      font-size: 0.8rem;
-      color: var(--secondary-text);
+    /* ===================================================
+       5. Modal 彈出視窗 (編輯行程與住宿)
+       =================================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 16px;
     }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 440px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title { font-size: 18px; font-weight: 700; }
+
+    .capsule-selector {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .capsule-btn {
+      flex: 0 0 auto;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      background: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .capsule-btn.active {
+      background: var(--text-main);
+      color: #ffffff;
+      border-color: var(--text-main);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .form-row .form-group { flex: 1; }
+
+    /* ===================================================
+       6. 住宿資訊區塊 (Accommodation)
+       =================================================== */
+    .hotel-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 16px var(--shadow);
+      margin-bottom: 16px;
+    }
+
+    .hotel-tag {
+      font-size: 12px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    /* ===================================================
+       7. 記帳 / 預算表區塊 (Budget & Expenses)
+       =================================================== */
+    .budget-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .budget-box {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .budget-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+    .budget-val { font-size: 20px; font-weight: 700; color: var(--text-main); }
+
+    .expense-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+    }
+
+    .expense-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .expense-cat {
+      font-size: 12px;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+    .expense-title { font-weight: 600; font-size: 15px; }
+    .expense-amount { font-weight: 700; font-size: 15px; }
+
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1>TAKAMATSU 2026</h1>
-      <p>香川・小豆島・豊島・直島 渡輪與自駕之旅</p>
+  <div class="app-container">
+    <!-- 頂部標題與莫蘭迪五色切換選單 -->
+    <header class="header-bar">
+      <h1 class="app-title">Takamatsu Oct 2026</h1>
+      <div class="theme-selector">
+        <div class="theme-dot dot-dusty-rose active" onclick="setTheme('dusty-rose')" title="Dusty Rose"></div>
+        <div class="theme-dot dot-sage-green" onclick="setTheme('sage-green')" title="Sage Green"></div>
+        <div class="theme-dot dot-fog-blue" onclick="setTheme('fog-blue')" title="Fog Blue"></div>
+        <div class="theme-dot dot-warm-taupe" onclick="setTheme('warm-taupe')" title="Warm Taupe"></div>
+        <div class="theme-dot dot-charcoal-gray" onclick="setTheme('charcoal-gray')" title="Charcoal Gray"></div>
+      </div>
     </header>
 
-    <!-- Sticky Tabs -->
-    <nav class="tab-nav">
-      <button class="tab-btn active" onclick="switchDay('day1')">Day 1</button>
-      <button class="tab-btn" onclick="switchDay('day2')">Day 2</button>
-      <button class="tab-btn" onclick="switchDay('day3')">Day 3</button>
-      <button class="tab-btn" onclick="switchDay('day4')">Day 4</button>
-      <button class="tab-btn" onclick="switchDay('day5')">Day 5</button>
-      <button class="tab-btn" onclick="switchDay('day6')">Day 6</button>
-      <button class="tab-btn" onclick="switchDay('day7')">Day 7</button>
+    <!-- 頂部主分頁選單 -->
+    <nav class="top-nav">
+      <button class="nav-btn active" onclick="switchTab('dashboard', this)">
+        <i data-lucide="home"></i> 首頁
+      </button>
+      <button class="nav-btn" onclick="switchTab('itinerary', this)">
+        <i data-lucide="map-pin"></i> 行程
+      </button>
+      <button class="nav-btn" onclick="switchTab('accommodation', this)">
+        <i data-lucide="bed"></i> 住宿資訊
+      </button>
+      <button class="nav-btn" onclick="switchTab('budget', this)">
+        <i data-lucide="wallet"></i> 記帳預算
+      </button>
     </nav>
 
-    <!-- Day 1 -->
-    <section id="day1" class="day-section active">
-      <h2 class="day-title">Day 1：抵達高松、呆呆獸公園、金刀比羅宮、四國水族館</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="time-badge">09:45 – 11:10</div>
-          <div class="item-title">JL477 航班抵達高松 & 取車</div>
-          <div class="item-details">
-            <div class="detail-row">抵達高松機場，辦理租車手續並取車。</div>
+    <!-- ===================================================
+         PAGE 1: 儀表板 (Dashboard)
+         =================================================== -->
+    <main id="tab-dashboard" class="tab-content active">
+      
+      <!-- 匯率即時試算卡片 -->
+      <section class="card">
+        <div class="card-header">
+          <div class="card-title"><i data-lucide="calculator"></i> 匯率即時試算</div>
+          <button class="icon-btn" onclick="resetCurrency()"><i data-lucide="rotate-cw"></i></button>
+        </div>
+        <div class="calc-box">
+          <div class="input-group">
+            <span class="input-label">JPY ¥</span>
+            <input type="number" id="input-jpy" placeholder="0" oninput="calcFromJPY(this.value)">
+          </div>
+          <div class="input-group">
+            <span class="input-label">HKD $</span>
+            <input type="number" id="input-hkd" placeholder="0" oninput="calcFromHKD(this.value)">
+          </div>
+          <div class="calc-footer">
+            <span class="rate-formula">基準匯率: 1 JPY = 0.0515 HKD</span>
+            <span id="tax-status" class="tax-badge">差 ¥5500 免稅</span>
           </div>
         </div>
+      </section>
 
-        <div class="timeline-item">
-          <div class="time-badge">12:30 – 13:00</div>
-          <div class="item-title">移動：高松機場 → ヤドン公園駐車場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 228 877 247*20</div>
-            <div class="detail-row">📍 〒761-2304 香川県綾歌郡綾川町萱原253-7（小羽毛池跡）</div>
-            <div class="detail-row">📞 +81 878-76-5280</div>
-          </div>
+      <!-- 一週天氣預報卡片 -->
+      <section class="card">
+        <div class="card-header">
+          <div class="card-title"><i data-lucide="cloud-sun"></i> 高松一週天氣預報</div>
+        </div>
+        <div class="weather-grid">
+          <div class="weather-item"><span class="day">10/13 周二</span><span class="icon">☀️</span><span class="temp">22°C</span></div>
+          <div class="weather-item"><span class="day">10/14 周三</span><span class="icon">⛅</span><span class="temp">21°C</span></div>
+          <div class="weather-item"><span class="day">10/15 周四</span><span class="icon">☁️</span><span class="temp">20°C</span></div>
+          <div class="weather-item"><span class="day">10/16 周五</span><span class="icon">☀️</span><span class="temp">23°C</span></div>
+          <div class="weather-item"><span class="day">10/17 周六</span><span class="icon">🌤️</span><span class="temp">22°C</span></div>
+          <div class="weather-item"><span class="day">10/18 周日</span><span class="icon">☀️</span><span class="temp">24°C</span></div>
+          <div class="weather-item"><span class="day">10/19 周一</span><span class="icon">⛅</span><span class="temp">21°C</span></div>
+        </div>
+      </section>
+
+      <!-- 入境模式 / 自駕模式 切換區塊 -->
+      <section class="card">
+        <div class="mode-switch-container">
+          <button class="mode-btn active" id="btn-mode-entry" onclick="setDashboardMode('entry')">
+            <i data-lucide="plane-landing"></i> 入境模式
+          </button>
+          <button class="mode-btn" id="btn-mode-drive" onclick="setDashboardMode('drive')">
+            <i data-lucide="car"></i> 自駕模式
+          </button>
         </div>
 
-        <div class="timeline-item">
-          <div class="time-badge">13:00 – 13:30</div>
-          <div class="item-title">呆呆獸公園（通称「ヤドン公園」）</div>
-          <div class="item-details">
-            <div class="detail-row">香川縣限定寶可夢主題公園。</div>
+        <!-- 入境模式內容 -->
+        <div id="mode-entry-content">
+          <div class="card-header">
+            <div class="card-title"><i data-lucide="qr-code"></i> Visit Japan Web</div>
+            <button class="icon-btn" onclick="clearEntryImage()"><i data-lucide="trash-2"></i></button>
           </div>
+          <div class="upload-box" onclick="document.getElementById('entry-file-input').click()">
+            <input type="file" id="entry-file-input" accept="image/*" style="display:none" onchange="handleImageUpload(event, 'entry-img-preview', 'entry-placeholder')">
+            <div id="entry-placeholder" class="upload-placeholder">
+              <i data-lucide="image-plus"></i>
+              <span>點擊上載截圖</span>
+            </div>
+            <img id="entry-img-preview" style="display:none;" src="" alt="VJW QR Code">
+          </div>
+          <a href="https://vjw-lp.digital.go.jp/" target="_blank" class="btn-action">
+            <i data-lucide="external-link"></i> 開啟 VJW 官網
+          </a>
         </div>
 
-        <div class="timeline-item">
-          <div class="time-badge">13:30 – 14:00</div>
-          <div class="item-title">移動：前往金刀比羅宮 Nice Parking</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">停車場 Mapcode</span> 77 353 864*26</div>
-            <div class="detail-row">📍 〒766-0001 香川県仲多度郡琴平町川西745−1</div>
-            <div class="detail-row">📞 +81 087-885-0114</div>
+        <!-- 自駕模式內容 -->
+        <div id="mode-drive-content" style="display:none;">
+          <div class="card-header">
+            <div class="card-title"><i data-lucide="map-pin"></i> 停車位置</div>
+            <div style="display:flex; gap:6px;">
+              <button class="icon-btn" onclick="resetDriveInfo()"><i data-lucide="rotate-cw"></i></button>
+              <button class="icon-btn" onclick="clearDriveImage()"><i data-lucide="trash-2"></i></button>
+            </div>
+          </div>
+          <input type="text" id="parking-spot-input" placeholder="輸入樓層/格號 (例如：B2-H33)" style="margin-bottom: 12px;">
+          
+          <div class="upload-box" onclick="document.getElementById('drive-file-input').click()">
+            <input type="file" id="drive-file-input" accept="image/*" style="display:none" onchange="handleImageUpload(event, 'drive-img-preview', 'drive-placeholder')">
+            <div id="drive-placeholder" class="upload-placeholder">
+              <i data-lucide="camera"></i>
+              <span>點擊上載截圖</span>
+            </div>
+            <img id="drive-img-preview" style="display:none;" src="" alt="Parking Location">
+          </div>
+
+          <div style="margin-top: 20px;">
+            <div class="card-title" style="margin-bottom: 10px; font-size:16px;">
+              <i data-lucide="shield-alert"></i> 駕駛速記
+            </div>
+            <div class="tiles-grid">
+              <div class="tile-item">
+                <div class="tile-sub">口訣</div>
+                <div class="tile-main">靠左行駛</div>
+              </div>
+              <div class="tile-item">
+                <div class="tile-sub">轉彎</div>
+                <div class="tile-main">右大左小</div>
+              </div>
+            </div>
+            <div class="driving-rules">
+              <div><span class="rule-tag bg-stop">STOP</span> 看到止まれ (Tomare) 標誌務必完全停止 3 秒。</div>
+              <div><span class="rule-tag bg-wait">WAIT</span> 紅燈時禁止左轉 (除非有綠色箭頭)。</div>
+              <div><span class="rule-tag bg-walk">WALK</span> 斑馬線有行人必須停車禮讓。</div>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="timeline-item">
-          <div class="time-badge">14:00 – 15:30</div>
-          <div class="item-title">金刀比羅宮</div>
-          <div class="item-details">
-            <div class="detail-row">📍 〒766-8501 香川県仲多度郡琴平町892-1</div>
-            <div class="detail-row">📞 +81 877-75-2121</div>
-          </div>
+      <!-- 航班資訊卡片 -->
+      <section class="card">
+        <div class="card-header">
+          <div class="card-title"><i data-lucide="plane"></i> 航班資訊</div>
         </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">15:40 – 16:15</div>
-          <div class="item-title">移動：前往四國水族館 停車場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 77 832 128*42</div>
-            <div class="detail-row"><span class="highlight-tag">停車場 Mapcode</span> 77 802 757*45</div>
-            <div class="detail-row">📍 〒769-0201 香川県綾歌郡宇多津町浜一番丁4番地</div>
-            <div class="detail-row">📞 +81 0877-49-4590</div>
-          </div>
+        <div class="flight-nav">
+          <button class="flight-tab active" onclick="switchFlight(0, this)">去程 10/13</button>
+          <button class="flight-tab" onclick="switchFlight(1, this)">轉機 10/14</button>
+          <button class="flight-tab" onclick="switchFlight(2, this)">回程 10/20</button>
         </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">16:30 – 18:00</div>
-          <div class="item-title">四國水族館</div>
-          <div class="item-details">
-            <div class="detail-row">營業時間：9:00 - 18:00</div>
-            <div class="detail-row price-tag">票價：大人 2,600日圓</div>
-          </div>
+        <div id="flight-card-body" class="flight-display">
+          <!-- JS 動態渲染航班詳情 -->
         </div>
+      </section>
 
-        <div class="timeline-item">
-          <div class="time-badge">19:00</div>
-          <div class="item-title">Fav Hotel</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 60 607 301*65</div>
-            <div class="detail-row">📍 〒760-0062 香川県高松市塩上町２丁目４−２０</div>
-          </div>
-        </div>
+    </main>
 
+    <!-- ===================================================
+         PAGE 2: 行程區塊 (Itinerary)
+         =================================================== -->
+    <main id="tab-itinerary" class="tab-content">
+      
+      <!-- 天數橫向選單 -->
+      <div class="day-tabs-container">
+        <button class="day-tab active" onclick="switchDay(1, this)">DAY 1</button>
+        <button class="day-tab" onclick="switchDay(2, this)">DAY 2</button>
+        <button class="day-tab" onclick="switchDay(3, this)">DAY 3</button>
+        <button class="day-tab" onclick="switchDay(4, this)">DAY 4</button>
+        <button class="day-tab" onclick="switchDay(5, this)">DAY 5</button>
+        <button class="day-tab" onclick="switchDay(6, this)">DAY 6</button>
+        <button class="day-tab" onclick="switchDay(7, this)">DAY 7</button>
       </div>
-    </section>
 
-    <!-- Day 2 -->
-    <section id="day2" class="day-section">
-      <h2 class="day-title">Day 2：小豆島環島巡禮</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="time-badge">07:00 – 07:15</div>
-          <div class="item-title">移動：前往高松のりば (高松港渡輪售票處)</div>
-          <div class="item-details">
-            <div class="detail-row">高松港・小豆島行き営業所 / 小豆島フェリー高松営業所</div>
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 60 666 095*58</div>
-            <div class="detail-row">📍 香川県高松市サンポート8-22 サンポート高松 フェリーセンター内小豆島行きフェリーセンター</div>
-            <div class="detail-row">📞 087-822-4383</div>
-          </div>
+      <!-- 即時天氣與排序管理按鈕 -->
+      <div class="itinerary-sub-bar">
+        <div class="weather-pill">
+          <i data-lucide="thermometer" style="width:14px;"></i>
+          <span id="current-day-loc">高松</span>
+          <span>☀️ 22°C</span>
         </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">08:02 – 09:02</div>
-          <div class="item-title">渡輪：高松 → 土庄 (小豆島)</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">09:05 – 09:15</div>
-          <div class="item-title">小豆島観光協会（土庄港観光案内所）</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 364 846 213*08</div>
-            <div class="detail-row">📍 〒761-4101 香川県小豆郡土庄町甲6194-11（土庄港渡輪轉運站大樓內）</div>
-            <div class="detail-row">📞 +81 879-82-1775</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">09:15 – 09:30</div>
-          <div class="item-title">移動：前往中山千枚田 臨時駐車場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 364 884 883*85</div>
-            <div class="detail-row">📍 〒761-4303 香川県小豆郡小豆島町中山</div>
-            <div class="detail-row">📞 +81 0879-82-1775（小豆島觀光協會）</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">09:30 – 10:15</div>
-          <div class="item-title">中山千枚田 (擁抱小豆島)</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">10:15 – 10:30</div>
-          <div class="item-title">移動：前往天使之路 第一駐車場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 364 787 899*84</div>
-            <div class="detail-row"><span class="highlight-tag">停車場 Mapcode</span> 364 817 118*45</div>
-            <div class="detail-row">📍 〒761-4106 香川県小豆郡土庄町甲24-92</div>
-            <div class="detail-row">📞 +81 0879-62-2801 (天使之路商店)</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">10:45 – 11:30</div>
-          <div class="item-title">天使の散歩道 (エンジェルロード)</div>
-          <div class="item-details">
-            <div class="detail-row">🌊 白天最佳時段：05:12 ～ 11:12（乾潮高峰 08:12）</div>
-            <div class="detail-row">🌙 傍晚／夜間時段：17:30 ～ 23:30（乾潮高峰 20:30）</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">11:45 – 12:45</div>
-          <div class="item-title">午餐：小豆島ラーメン Hishio エンジェルロード店</div>
-          <div class="item-details">
-            <div class="detail-row">📍 〒761-4100 香川県小豆郡土庄町甲24-18</div>
-            <div class="detail-row">📞 +81 0879-62-8720</div>
-            <div class="detail-row">營業時間：11:00～20:00 (L.O. 17:45)</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">12:50</div>
-          <div class="item-title">富丘八幡神社</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 364 818 833*57</div>
-            <div class="detail-row"><span class="highlight-tag">備用／鳥居前入口 Mapcode</span> 364 818 798*73</div>
-            <div class="detail-row">📍 〒761-4121 香川県小豆郡土庄町渕崎甲2421</div>
-            <div class="detail-row">📞 0879-62-1538</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">13:00 – 13:20</div>
-          <div class="item-title">移動：前往道の駅 第3駐車場 (道の駅小豆島オリーブ公園)</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 364 798 305*82</div>
-            <div class="detail-row">📍 〒761-4434 香川県小豆郡小豆島町西村甲1941-1</div>
-            <div class="detail-row">📞 +81 879-82-2200</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">13:30 – 15:00</div>
-          <div class="item-title">橄欖公園 (道の駅 小豆島オリーブ公園)</div>
-          <div class="item-details">
-            <div class="detail-row">營業時間：8:30 - 17:00</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">15:15 – 15:30</div>
-          <div class="item-title">移動：前往丸金醬油紀念館停車場</div>
-          <div class="item-details">
-            <div class="detail-row">位於紀念館與物產館兩側道路旁</div>
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 364 773 589*62</div>
-            <div class="detail-row">📍 〒761-4421 香川県小豆郡小豆島町苗羽甲1850</div>
-            <div class="detail-row">📞 +81 0879-82-1011（小豆島町商工會）</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">15:30 – 15:45</div>
-          <div class="item-title">丸金醬油紀念館 醤の郷（ひしおのさと）</div>
-          <div class="item-details">
-            <div class="detail-row">營業時間：9:00 - 16:00</div>
-            <div class="detail-row price-tag">票價：大人 500円</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">16:00 – 16:15</div>
-          <div class="item-title">Edit x seven Setouchi Shodoshima</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 364 802 800*16</div>
-            <div class="detail-row">📍 〒761-4411 香川県小豆郡小豆島町安田甲144-21</div>
-          </div>
-        </div>
-
+        <button class="sort-btn" onclick="toggleSortMode()">
+          <i data-lucide="arrow-up-down" style="width:14px;"></i>
+          <span id="sort-btn-text">排序與管理</span>
+        </button>
       </div>
-    </section>
 
-    <!-- Day 3 -->
-    <section id="day3" class="day-section">
-      <h2 class="day-title">Day 3：小豆島甜點、豊島藝術漫遊 → 宇野</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="time-badge">12:00 – 12:05</div>
-          <div class="item-title">Minori Gelato</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 364 831 124*37</div>
-            <div class="detail-row">📍 〒761-4432 香川県小豆郡小豆島町草壁本町1055-2</div>
-            <div class="detail-row">📞 +81 0879-62-8181</div>
-            <div class="detail-row">營業時間：12:00～18:00 (L.O. 17:45)｜定休日：星期三、四</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">12:05 – 12:30</div>
-          <div class="item-title">移動：前往土庄港 小豆島豊島フェリー 土庄港フェリー乗り場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 364 846 300*51</div>
-            <div class="detail-row">📍 〒761-4101 香川県小豆郡土庄町甲</div>
-            <div class="detail-row">📞 +81 87-962-1348</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">13:10 – 13:40</div>
-          <div class="item-title">渡輪：土庄 (小豆島) → 唐櫃 (豊島)</div>
-          <div class="item-details">
-            <div class="detail-row">所要時間：約 30 分鐘</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">13:45 – 13:50</div>
-          <div class="item-title">移動：前往豐島美術館與梯田專用停車場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 871 251 334*74</div>
-            <div class="detail-row"><span class="highlight-tag">停車場 Mapcode</span> 871 251 333*31</div>
-            <div class="detail-row">📍 〒 香川県小豆郡土庄町豊島唐櫃1771</div>
-            <div class="detail-row">📞 +81 879683555</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">14:00 – 16:00</div>
-          <div class="item-title">唐櫃 | 豊島美術館</div>
-          <div class="item-details">
-            <div class="detail-row">營業時間：10:00 〜 16:00 (最終入館 15:30)｜閉館日：周二</div>
-            <div class="detail-row price-tag">票價：線上 1,800円 / 窗口 2,000円</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">16:00</div>
-          <div class="item-title">唐櫃 | 豐島美術館前山坡賞梯田、海景</div>
-          <div class="item-details">
-            <div class="detail-row">沿著「縣道255號」的坡地制高點可以俯瞰波光粼粼的瀨戶內海。</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">16:05</div>
-          <div class="item-title">唐櫃 | 藝術作品：多重籃框（勝者はいない─マルチ・バスケットボール）</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 871 252 273*08</div>
-            <div class="detail-row">📍 〒 香川県小豆郡土庄町豊島唐櫃2614</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">16:05</div>
-          <div class="item-title">唐櫃 | Les Archives du Coeur（心臟音的資料館, 心臓音のアーカイブ）</div>
-          <div class="item-details">
-            <div class="detail-row">📍 〒 香川県小豆郡土庄町豊島唐櫃2801-1</div>
-            <div class="detail-row">營業時間：10:00 〜 16:00 (最終入館 15:30)｜閉館日：周二</div>
-            <div class="detail-row price-tag">票價：線上 600円 / 窗口 700円</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">15:20</div>
-          <div class="item-title">移動：前往唐櫃港 小豆島豊島フェリー唐櫃港チケット売り場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 871 251 383*71</div>
-            <div class="detail-row">📍 〒761-4662 香川県小豆郡土庄町豊島唐櫃２５３０−１１</div>
-            <div class="detail-row">📞 +81 87-968-3239</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">18:20 – 19:19</div>
-          <div class="item-title">渡輪：唐櫃 (豊島) → 宇野</div>
-          <div class="item-details">
-            <div class="detail-row">所要時間：約 59 分鐘</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">19:19 – 19:25</div>
-          <div class="item-title">入住 Yado Storo</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 19 082 173*77</div>
-            <div class="detail-row"><span class="highlight-tag">備用／宇野站前區域 Mapcode</span> 19 082 165*65</div>
-            <div class="detail-row">📍 〒706-0011 岡山県玉野市宇野2丁目4-8（或 宇野3丁目10-3 鄰近巷弄）</div>
-          </div>
-        </div>
-
+      <!-- 每日行程列表 -->
+      <div id="itinerary-list">
+        <!-- JS 動態載入卡片 -->
       </div>
-    </section>
 
-    <!-- Day 4 -->
-    <section id="day4" class="day-section">
-      <h2 class="day-title">Day 4：直島現代藝術巡禮 → 返高松</h2>
-      <div class="timeline">
+      <!-- 新增行程 Floating Action Button -->
+      <button class="fab" onclick="openItineraryModal()"><i data-lucide="plus"></i></button>
 
-        <div class="timeline-item">
-          <div class="time-badge">07:45 – 07:50</div>
-          <div class="item-title">移動：前往四國汽船 宇野港渡輪售票處（往直島）</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 19 264 704*85 / 19 264 705*67</div>
-            <div class="detail-row">📍 岡山県玉野市築港1丁目3-2番地</div>
-            <div class="detail-row">📞 0863-31-1641 ※各渡輪及旅客船出航前30分鐘開始售票</div>
-          </div>
-        </div>
+    </main>
 
-        <div class="timeline-item">
-          <div class="time-badge">08:22 – 08:42</div>
-          <div class="item-title">渡輪：宇野 → 宮浦 (直島)</div>
-          <div class="item-details">
-            <div class="detail-row">所要時間：約 20 分鐘</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">08:50</div>
-          <div class="item-title">移動：前往直島町立宮浦港停車場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 19 147 516*51</div>
-            <div class="detail-row">📍 〒761-3110 香川県香川郡直島町宮ノ浦2249-22</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">08:50 – 09:30</div>
-          <div class="item-title">宮浦港 | 紅南瓜、海邊驛站、直島展覽館</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">09:40 – 09:45</div>
-          <div class="item-title">移動：前往地中美術館 停車場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">停車場 Mapcode</span> 19 118 560*02</div>
-            <div class="detail-row">📍 〒 香川県香川郡直島町3449−1</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">10:00 – 11:00</div>
-          <div class="item-title">地中美術館</div>
-          <div class="item-details">
-            <div class="detail-row">營業時間：10:00 〜 17:00 (最終入館 16:00)｜閉館日：周一</div>
-            <div class="detail-row price-tag">票價：【六日與國定假日】線上 2,700円 / 當日券 3,000円</div>
-            <div class="detail-row">預約：Chichu Art Museum</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">10:00 – 11:00</div>
-          <div class="item-title">李禹煥美術館</div>
-          <div class="item-details">
-            <div class="detail-row">📍 〒 香川県香川郡直島町字倉浦1390</div>
-            <div class="detail-row">營業時間：10:00 〜 17:00 (最終入館 16:00)｜閉館日：周一</div>
-            <div class="detail-row price-tag">票價：線上 1,200円 / 窗口 1,400円</div>
-            <div class="detail-row">預約：Lee Ufan Museum</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">11:30 – 12:30</div>
-          <div class="item-title">直島當代美術館 – 倍樂生之家 Benesse House</div>
-          <div class="item-details">
-            <div class="detail-row">📍 〒 香川県香川郡直島町3419</div>
-            <div class="detail-row">營業時間：08:00 〜 21:00 (最終入館 20:00)｜閉館日：全年無休</div>
-            <div class="detail-row price-tag">票價：線上 1,300円 / 窗口 1,500円</div>
-            <div class="detail-row">預約：Benesse House Museum/Valley Gallery</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">11:45</div>
-          <div class="item-title">Valley Gallery (NA25-B)</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">12:00</div>
-          <div class="item-title">杉本博司時間的迴廊 (Hiroshi Sugimoto Gallery: Time Corridors)</div>
-          <div class="item-details">
-            <div class="detail-row">📌 已預約 Booked: 12:00</div>
-            <div class="detail-row">營業時間：11:00 〜 15:00 (最終入館 14:00)｜閉館日：全年無休</div>
-            <div class="detail-row price-tag">票價：線上 1,600円 / 窗口 1,700円 (*含茶點 Tea and sweets included)</div>
-            <div class="detail-row">預約：Hiroshi Sugimoto Gallery: Time Corridors</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">12:30</div>
-          <div class="item-title">草間彌生 黃南瓜 (黄かぼちゃ)</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">12:45</div>
-          <div class="item-title">恵美須神社</div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">13:18 – 13:32</div>
-          <div class="item-title">移動：接駁車 (Shuttle) Tsutsuji-so → 地中美術館 停車場</div>
-          <div class="item-details">
-            <div class="detail-row">班次時間：12:53 - 13:07 / 13:18 - 13:32</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">13:45</div>
-          <div class="item-title">移動：前往本村地區無料駐車場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">停車場 Mapcode</span> 871 120 512*22</div>
-            <div class="detail-row">📍 📍 3299-34 Honmura, Naoshima, Kagawa District, Kagawa 761-3110</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">13:45 – 14:30</div>
-          <div class="item-title">午餐：カフェサロン中奥</div>
-          <div class="item-details">
-            <div class="detail-row">招牌：咖哩蛋包飯</div>
-            <div class="detail-row">📍 〒761-3110 香川縣香川郡直島町本村中奧1167</div>
-            <div class="detail-row">📞 +81 087-892-3887</div>
-            <div class="detail-row">營業時間：星期三至星期日 11:30-15:00 (LO 14:40) / 17:30-21:00 (LO 20:30)</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">14:45 – 15:45</div>
-          <div class="item-title">本村 | 直島新美術館</div>
-          <div class="item-details">
-            <div class="detail-row">📍 〒 香川県香川郡直島町3419</div>
-            <div class="detail-row">營業時間：10:00 ～ 16:30 (最終入館 16:00)</div>
-            <div class="detail-row price-tag">票價：線上 1,500円 / 窗口 1,700円</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">16:00</div>
-          <div class="item-title">Naoshima Gelato (直島ジェラート)</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 871 120 873*86</div>
-            <div class="detail-row">📍 〒 香川県香川郡直島町843-1</div>
-            <div class="detail-row">營業時間：13:00 ~ 17:00</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">16:05 – 16:15</div>
-          <div class="item-title">移動：前往直島町立宮浦港停車場</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 19 147 516*51</div>
-            <div class="detail-row">📍 〒761-3110 香川県香川郡直島町宮ノ浦2249-22</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">16:15</div>
-          <div class="item-title">移動：前往四國汽船 直島 宮浦港 (フェリー切符売り場)</div>
-          <div class="item-details">
-            <div class="detail-row"><span class="highlight-tag">Mapcode</span> 19 147 398*26</div>
-            <div class="detail-row">📍 〒761-3110 香川県香川郡直島町2249-40</div>
-            <div class="detail-row">📞 087-892-3104</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">16:20 – 16:35</div>
-          <div class="item-title">宮浦 |「I♥湯」錢湯</div>
-          <div class="item-details">
-            <div class="detail-row">📍 〒 香川県香川郡直島町2252-2</div>
-            <div class="detail-row">營業時間：13:00 〜 21:00 (最終受付 20:30)</div>
-            <div class="detail-row">ℹ️ 浴室見學會：每週六、週日及公眾假期 13:00 至 15:50 舉行</div>
-            <div class="detail-row price-tag">票價：660円</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="time-badge">17:00 – 18:00</div>
-          <div class="item-title">渡輪：直島（宮浦）→ 高松</div>
-          <div class="item-details">
-            <div class="detail-row">所要時間：約 60 分鐘</div>
-          </div>
-        </div>
-
+    <!-- ===================================================
+         PAGE 3: 住宿資訊區塊 (Accommodation)
+         =================================================== -->
+    <main id="tab-accommodation" class="tab-content">
+      <div id="hotel-list">
+        <!-- JS 動態渲染全部住宿卡片 -->
       </div>
-    </section>
+      <button class="fab" onclick="openHotelModal()"><i data-lucide="plus"></i></button>
+    </main>
 
-    <!-- Day 5 -->
-    <section id="day5" class="day-section">
-      <h2 class="day-title">Day 5：還車</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="time-badge">12:30</div>
-          <div class="item-title">辦理還車手續</div>
+    <!-- ===================================================
+         PAGE 4: 記帳 / 預算表區塊 (Budget)
+         =================================================== -->
+    <main id="tab-budget" class="tab-content">
+      
+      <!-- 預算開銷總覽 -->
+      <section class="card">
+        <div class="card-header">
+          <div class="card-title"><i data-lucide="pie-chart"></i> 預算開銷總覽</div>
         </div>
-
-      </div>
-    </section>
-
-    <!-- Day 6 -->
-    <section id="day6" class="day-section">
-      <h2 class="day-title">Day 6：日本環球影城 全日遊</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="time-badge">08:30 – 20:00</div>
-          <div class="item-title">USJ (日本環球影城)</div>
+        <div class="budget-summary-grid">
+          <div class="budget-box">
+            <div class="budget-label">總計花費 (JPY)</div>
+            <div class="budget-val" id="total-jpy">¥0</div>
+          </div>
+          <div class="budget-box">
+            <div class="budget-label">折合港幣 (HKD)</div>
+            <div class="budget-val" id="total-hkd">$0.0</div>
+          </div>
         </div>
+      </section>
 
-      </div>
-    </section>
-
-    <!-- Day 7 -->
-    <section id="day7" class="day-section">
-      <h2 class="day-title">Day 7：返港</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="time-badge">20:40 – 23:50</div>
-          <div class="item-title">搭機返回香港</div>
+      <!-- 新增開銷項目 -->
+      <section class="card">
+        <div class="card-header">
+          <div class="card-title"><i data-lucide="plus-circle"></i> 新增開銷項目</div>
         </div>
+        <div class="form-group" style="margin-bottom: 12px;">
+          <input type="text" id="expense-name" placeholder="項目名稱 (如: 伴手禮、骨付鳥晚餐)">
+        </div>
+        <div class="form-row" style="margin-bottom: 16px;">
+          <div class="form-group">
+            <select id="expense-category">
+              <option value="美食">🍴 美食</option>
+              <option value="景點">📷 景點</option>
+              <option value="交通">🚗 交通</option>
+              <option value="住宿">🏨 住宿</option>
+              <option value="活動">🎟️ 活動</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="number" id="expense-amount" placeholder="金額 (JPY ¥)">
+          </div>
+        </div>
+        <button class="btn-action" onclick="addExpense()">記錄一筆開銷</button>
+      </section>
 
+      <!-- 開銷清單流水帳 -->
+      <div id="expense-list">
+        <!-- JS 動態渲染歷史紀錄 -->
       </div>
-    </section>
 
-    <footer>
-      <p>TAKAMATSU 2026 Travel Itinerary</p>
-    </footer>
+    </main>
   </div>
 
+  <!-- ===================================================
+       MODAL 1: 編輯 / 新增行程
+       =================================================== -->
+  <div class="modal-overlay" id="itinerary-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">編輯行程</div>
+        <button class="icon-btn" onclick="closeItineraryModal()"><i data-lucide="x"></i></button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">卡片分類</label>
+        <div class="capsule-selector" id="modal-cat-selector">
+          <button class="capsule-btn active" onclick="selectModalCat('景點', this)"><i data-lucide="camera" style="width:12px;"></i> 景點</button>
+          <button class="capsule-btn" onclick="selectModalCat('美食', this)"><i data-lucide="utensils" style="width:12px;"></i> 美食</button>
+          <button class="capsule-btn" onclick="selectModalCat('交通', this)"><i data-lucide="car" style="width:12px;"></i> 交通</button>
+          <button class="capsule-btn" onclick="selectModalCat('住宿', this)"><i data-lucide="bed" style="width:12px;"></i> 住宿</button>
+          <button class="capsule-btn" onclick="selectModalCat('活動', this)"><i data-lucide="ticket" style="width:12px;"></i> 活動</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">標題</label>
+        <input type="text" id="modal-title-input" placeholder="例如：金刀比羅宮">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">地點 / GOOGLE MAP 關鍵字</label>
+        <input type="text" id="modal-location-input" placeholder="例如：Kotohira, Kagawa">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">開始時間</label>
+          <input type="text" id="modal-start-time" placeholder="14:00">
+        </div>
+        <div class="form-group">
+          <label class="form-label">結束時間</label>
+          <input type="text" id="modal-end-time" placeholder="15:30">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">MAPCODE</label>
+        <input type="text" id="modal-mapcode-input" placeholder="例如：77 353 864*26">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">重要提醒 / 攻略</label>
+        <input type="text" id="modal-reminders-input" placeholder="新增預約代號、必點菜單等">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">備註</label>
+        <textarea id="modal-notes-input" rows="3" placeholder="景點歷史故事或補充事項"></textarea>
+      </div>
+
+      <button class="btn-action" style="background: var(--text-main); color:#ffffff; margin-top:8px;" onclick="saveItineraryItem()">儲存變更</button>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       MODAL 2: 編輯 / 新增住宿
+       =================================================== -->
+  <div class="modal-overlay" id="hotel-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">編輯住宿</div>
+        <button class="icon-btn" onclick="closeHotelModal()"><i data-lucide="x"></i></button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">分類</label>
+        <div class="capsule-selector" id="modal-hotel-cat">
+          <button class="capsule-btn active" onclick="selectHotelCat('Hotel', this)"><i data-lucide="building" style="width:12px;"></i> Hotel</button>
+          <button class="capsule-btn" onclick="selectHotelCat('Airbnb', this)"><i data-lucide="home" style="width:12px;"></i> Airbnb</button>
+          <button class="capsule-btn" onclick="selectHotelCat('溫泉', this)"><i data-lucide="hot-tub" style="width:12px;"></i> 溫泉</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">住宿名稱</label>
+        <input type="text" id="modal-hotel-name" placeholder="Fav Hotel">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">日期</label>
+        <input type="text" id="modal-hotel-date" placeholder="Day 1 (10/14)">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">入住 Check-in</label>
+          <input type="text" id="modal-hotel-checkin" placeholder="15:00">
+        </div>
+        <div class="form-group">
+          <label class="form-label">退房 Check-out</label>
+          <input type="text" id="modal-hotel-checkout" placeholder="10:00">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirmation No.</label>
+        <input type="text" id="modal-hotel-confirm" placeholder="例如：#12345678">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">MAPCODE / 電話</label>
+        <input type="text" id="modal-hotel-mapcode" placeholder="60 607 301*65 / +81 87-885-0114">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">入住須知 / 攻略</label>
+        <input type="text" id="modal-hotel-notice" placeholder="例如：櫃檯只到22:00">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">房型</label>
+        <input type="text" id="modal-hotel-room" placeholder="雙人房 / 含早餐 / 禁菸">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">備註</label>
+        <textarea id="modal-hotel-notes" rows="2" placeholder="備註說明"></textarea>
+      </div>
+
+      <button class="btn-action" style="background: var(--text-main); color:#ffffff;" onclick="saveHotelItem()">儲存變更</button>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       JAVASCRIPT 邏輯處理
+       =================================================== -->
   <script>
-    function switchDay(dayId) {
-      const sections = document.querySelectorAll('.day-section');
-      sections.forEach(sec => sec.classList.remove('active'));
+    /* ---------------------------------------------------
+       1. 全局資料與狀態 (Data Store)
+       --------------------------------------------------- */
+    const JPY_TO_HKD = 0.0515; // 匯率基準
+    let currentDay = 1;
+    let isSortMode = false;
+    let editingItineraryId = null;
+    let editingHotelId = null;
+    let currentSelectedCategory = '景點';
+    let currentSelectedHotelCat = 'Hotel';
 
-      const buttons = document.querySelectorAll('.tab-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
+    // 航班資料
+    const flights = [
+      { route: "去程 13/10", from: "HKG", to: "HND", no: "UO628", duration: "4h 20m", dep: "20:00", arr: "01:20+1" },
+      { route: "轉機 14/10", from: "HND", to: "TAK", no: "JL477", duration: "1h 25m", dep: "09:45", arr: "11:10" },
+      { route: "回程 20/10", from: "KIX", to: "HKG", no: "UO689", duration: "4h 10m", dep: "20:40", arr: "23:50" }
+    ];
 
-      const targetSection = document.getElementById(dayId);
-      if (targetSection) {
-        targetSection.classList.add('active');
-      }
+    // 完整的行程資料庫 (7 天全部景點)
+    let itineraryData = {
+      1: [
+        { id: 101, time: "09:45 – 11:10", cat: "交通", title: "JL477 抵達高松，取車", address: "高松機場", mapcode: "", notes: "辦理租車手續，檢查車輛傷痕及設定導航。", reminder: "" },
+        { id: 102, time: "12:30 – 13:00", cat: "交通", title: "高松機場 → ヤドン公園駐車場", address: "香川県綾歌郡綾川町萱原253-7", phone: "+81 878-76-5280", mapcode: "228 877 247*20", notes: "前往呆呆獸公園預備停車。", reminder: "" },
+        { id: 103, time: "13:00 – 13:30", cat: "景點", title: "呆呆獸公園 (ヤドン公園)", address: "香川県綾歌郡綾川町萱原253-7", mapcode: "", notes: "寶可夢呆呆獸主題公園，有許多可愛造型設施，拍照熱點。", reminder: "必買伴手禮: 呆呆獸造型烏龍麵" },
+        { id: 104, time: "13:30 – 14:00", cat: "交通", title: "→ 金刀比羅宮 Nice Parking", address: "香川県仲多度郡琴平町川西７４５−１", phone: "+81 087-885-0114", mapcode: "77 353 864*26", notes: "金刀比羅宮參道下停車場。", reminder: "" },
+        { id: 105, time: "14:00 – 15:30", cat: "景點", title: "金刀比羅宮", address: "香川県仲多度郡琴平町892-1", phone: "+81 877-75-2121", mapcode: "", notes: "日本最難參拜的神社之一，到達御本宮需爬785階石階。供奉海上守護神。", reminder: "必吃美食: 參道炙燒灸饅頭, 必買: 黃金幸福御守" },
+        { id: 106, time: "15:40 – 16:15", cat: "交通", title: "→ 四國水族館 停車場", address: "香川県綾歌郡宇多津町浜一番丁4番地", phone: "+81 0877-49-4590", mapcode: "77 802 757*45", notes: "備用Mapcode: 77 832 128*42", reminder: "" },
+        { id: 107, time: "16:30 – 18:00", cat: "景點", title: "四國水族館", address: "香川県綾歌郡宇多津町浜一番丁4番地", phone: "+81 0877-49-4590", mapcode: "", notes: "營業時間 9:00-18:00。票價: 大人 2,600日圓。夕陽與海豚表演為最大看點。", reminder: "必看: 太平洋水槽夕陽景致" },
+        { id: 108, time: "19:00", cat: "住宿", title: "Fav Hotel", address: "香川県高松市塩上町２丁目４−２0", mapcode: "60 607 301*65", notes: "辦理 Check-in，準備晚餐與休息。", reminder: "" }
+      ],
+      2: [
+        { id: 201, time: "07:00 – 07:15", cat: "交通", title: "→ 高松のりば (小豆島渡輪營業所)", address: "香川県高松市サンポート8-22", phone: "087-822-4383", mapcode: "60 666 095*58", notes: "準備搭乘小豆島渡輪。", reminder: "" },
+        { id: 202, time: "08:02 – 09:02", cat: "交通", title: "高松 → 土庄 (小豆島)", address: "土庄港", mapcode: "", notes: "渡輪航程約 60 分鐘。", reminder: "" },
+        { id: 203, time: "09:05 – 09:15", cat: "景點", title: "小豆島觀光協會 (土庄港渡輪轉運站內)", address: "香川県小豆郡土庄町甲6194-11", phone: "+81 879-82-1775", mapcode: "364 846 213*08", notes: "索取地圖及觀光資訊。", reminder: "" },
+        { id: 204, time: "09:15 – 09:30", cat: "交通", title: "→ 中山千枚田 臨時駐車場", address: "香川県小豆郡小豆島町中山", phone: "+81 0879-82-1775", mapcode: "364 884 883*85", notes: "前往梯田美景。", reminder: "" },
+        { id: 205, time: "09:30 – 10:15", cat: "景點", title: "中山千枚田 (擁抱小豆島)", address: "香川県小豆郡小豆島町中山", mapcode: "", notes: "山谷間800多塊梯田交織的壯麗景象，電影《第八日的蟬》取景地。", reminder: "" },
+        { id: 206, time: "10:15 – 10:30", cat: "交通", title: "→ 天使之路 第一駐車場", address: "香川県小豆郡土庄町甲24-92", phone: "+81 0879-62-2801", mapcode: "364 817 118*45", notes: "備用Mapcode: 364 787 899*84", reminder: "" },
+        { id: 207, time: "10:45 – 11:30", cat: "景點", title: "天使の散歩道 (エンジェルロード)", address: "香川県小豆郡土庄町甲24-92", mapcode: "", notes: "退潮時才會出現的沙洲小徑，相傳與戀人牽手走過能獲得幸福。", reminder: "乾潮高峰為 08:12 及 20:30" },
+        { id: 208, time: "11:45 – 12:45", cat: "美食", title: "小豆島ラーメン Hishio エンジェルロード店", address: "香川県小豆郡土庄町甲24-18", phone: "+81 0879-62-8720", mapcode: "", notes: "營業時間：11:00～20:00 (LO 17:45)。無敵海景拉麵店。", reminder: "必點菜單: 醬油醬醬拉麵, 叉燒飯" },
+        { id: 209, time: "12:50", cat: "景點", title: "富丘八幡神社", address: "香川県小豆郡土庄町渕崎甲2421", phone: "0879-62-1538", mapcode: "364 818 833*57", notes: "鳥居前入口處Mapcode: 364 818 798*73。神社能俯瞰雙子浦海景。", reminder: "" },
+        { id: 210, time: "13:00 – 13:20", cat: "交通", title: "→ 道の駅 第3駐車場 (小豆島橄欖公園)", address: "香川県小豆郡小豆島町西村甲1941-1", phone: "+81 879-82-2200", mapcode: "364 798 305*82", notes: "", reminder: "" },
+        { id: 211, time: "13:30 – 15:00", cat: "景點", title: "橄欖公園 (道の駅 小豆島オリーブ公園)", address: "香川県小豆郡小豆島町西村甲1941-1", mapcode: "", notes: "《魔女宅急便》真人版取景地，可免費借用飛天掃帚在白色風車前拍照。", reminder: "必吃美食: 橄欖霜淇淋" },
+        { id: 212, time: "15:15 – 15:30", cat: "交通", title: "→ 丸金醬油紀念館停車場", address: "香川県小豆郡小豆島町苗羽甲1850", phone: "+81 0879-82-1011", mapcode: "364 773 589*62", notes: "位於紀念館與物產館兩側道路旁。", reminder: "" },
+        { id: 213, time: "15:30 – 15:45", cat: "景點", title: "丸金醬油紀念館 醤の郷", address: "香川県小豆郡小豆島町苗羽甲1850", mapcode: "", notes: "營業時間 9:00-16:00。門票 500円。百年合掌造木造醬油藏。", reminder: "必吃美食: 醬油霜淇淋" },
+        { id: 214, time: "16:00 – 16:15", cat: "住宿", title: "Edit x seven Setouchi Shodoshima", address: "香川県小豆郡小豆島町安田甲144-21", mapcode: "364 802 800*16", notes: "辦理入住，享用島上寧靜夜晚。", reminder: "" }
+      ],
+      3: [
+        { id: 301, time: "12:00 – 12:05", cat: "美食", title: "Minori Gelato", address: "香川県小豆郡小豆島町草壁本町1055-2", phone: "+81 0879-62-8181", mapcode: "364 831 124*37", notes: "營業時間 12:00～18:00。主打小豆島在地旬果製作的義式冰淇淋。", reminder: "必點菜單: 橄欖油 gelato, 柑橘 gelato" },
+        { id: 302, time: "12:05 – 12:30", cat: "交通", title: "→ 土庄港 小豆島豊島渡輪碼頭", address: "香川県小豆郡土庄町甲", phone: "+81 87-962-1348", mapcode: "364 846 300*51", notes: "準備搭船前往豐島。", reminder: "" },
+        { id: 303, time: "13:10 – 13:40", cat: "交通", title: "土庄 (小豆島) → 唐櫃 (豊島)", address: "唐櫃港", mapcode: "", notes: "航程約 30 分鐘。", reminder: "" },
+        { id: 304, time: "13:45 – 13:50", cat: "交通", title: "→ 豐島美術館與梯田專用停車場", address: "香川県小豆郡土庄町豊島唐櫃1771", phone: "+81 879683555", mapcode: "871 251 333*31", notes: "備用Mapcode: 871 251 334*74", reminder: "" },
+        { id: 305, time: "14:00 – 16:00", cat: "景點", title: "唐櫃 | 豊島美術館", address: "香川県小豆郡土庄町豊島唐櫃1771", phone: "+81 879683555", mapcode: "", notes: "建築師西澤立衛與藝術家內藤禮作品，水滴般的建築與自然水珠融為體。", reminder: "重要預約代號: 線上預約 1,800円 (現場2,000円)" },
+        { id: 306, time: "16:00", cat: "景點", title: "唐櫃 | 豐島美術館前山坡賞梯田、海景", address: "香川県小豆郡土庄町豊島唐櫃", mapcode: "", notes: "沿著「縣道255號」坡地制高點俯瞰瀨戶內海與梯田景致。", reminder: "" },
+        { id: 307, time: "16:05", cat: "景點", title: "唐櫃 | 藝術作品：多重籃框", address: "香川県小豆郡土庄町豊島唐櫃2614", mapcode: "871 252 273*08", notes: "勝者はいない─マルチ・バスケットボール。互動式藝術裝置。", reminder: "" },
+        { id: 308, time: "16:05", cat: "景點", title: "唐櫃 | 心臟音的資料館 (Les Archives du Coeur)", address: "香川県小豆郡土庄町豊島唐櫃2801-1", mapcode: "", notes: "收錄來自世界各地人們的心跳聲，法國藝術家 Christian Boltanski 作品。", reminder: "門票: 線上600円 / 窗口700円" },
+        { id: 309, time: "17:20", cat: "交通", title: "→ 唐櫃港 渡輪售票處", address: "香川県小豆郡土庄町豊島唐櫃２５３０−１１", phone: "+81 87-968-3239", mapcode: "871 251 383*71", notes: "準備搭乘航次前往宇野。", reminder: "" },
+        { id: 310, time: "18:20 – 19:19", cat: "交通", title: "唐櫃 (豊島) → 宇野", address: "宇野港", mapcode: "", notes: "所要時間：約 59 分鐘。", reminder: "" },
+        { id: 311, time: "19:19 – 19:25", cat: "住宿", title: "Yado Storo", address: "岡山県玉野市宇野2丁目4-8", mapcode: "19 082 173*77", notes: "備用Mapcode: 19 082 165*65。辦理入住，近宇野站。", reminder: "" }
+      ],
+      4: [
+        { id: 401, time: "07:45 – 07:50", cat: "交通", title: "→ 四國汽船 宇野港渡輪售票處 (往直島)", address: "岡山県玉野市築港1丁目3-2番地", phone: "0863-31-1641", mapcode: "19 264 704*85", notes: "備用Mapcode: 19 264 705*67。航次出航30分鐘前開賣。", reminder: "" },
+        { id: 402, time: "08:22 – 08:42", cat: "交通", title: "宇野 → 宮浦 (直島)", address: "宮浦港", mapcode: "", notes: "航程約 20 分鐘。", reminder: "" },
+        { id: 403, time: "08:50", cat: "交通", title: "→ 直島町立宮浦港停車場", address: "香川県香川郡直島町宮ノ浦2249-22", mapcode: "19 147 516*51", notes: "停妥車輛後步行展開巡禮。", reminder: "" },
+        { id: 404, time: "08:50 – 09:30", cat: "景點", title: "宮浦港 | 紅南瓜、海邊驛站、直島展覽館", address: "香川県香川郡直島町宮ノ浦", mapcode: "", notes: "草間彌生經典「紅南瓜」可走進內部，妹島和世設計的海邊驛站。", reminder: "" },
+        { id: 405, time: "09:40 – 09:45", cat: "交通", title: "→ 地中美術館 停車場", address: "香川県香川郡直島町3449−1", mapcode: "19 118 560*02", notes: "專用停車場。", reminder: "" },
+        { id: 406, time: "10:00 – 11:00", cat: "景點", title: "地中美術館", address: "香川県香川郡直島町3449−1", mapcode: "", notes: "安藤忠雄設計，整座建築埋於地下以保護自然景觀。展出莫內《睡蓮》。", reminder: "重要預約代號: 線上預約 2,700円" },
+        { id: 407, time: "10:00 – 11:00", cat: "景點", title: "李禹煥美術館", address: "香川県香川郡直島町字倉浦1390", mapcode: "", notes: "安藤忠雄與韓國藝術家李禹煥合作打造，靜謐自然融合之地。", reminder: "門票: 線上 1,200円" },
+        { id: 408, time: "11:30 – 12:30", cat: "景點", title: "倍樂生之家 Benesse House", address: "香川県香川郡直島町3419", mapcode: "", notes: "美術館與飯店結合的空間，自然、建築與藝術對話。", reminder: "門票: 線上 1,300円" },
+        { id: 409, time: "11:45", cat: "景點", title: "Valley Gallery (NA25-B)", address: "香川県香川郡直島町3419", mapcode: "", notes: "展出草間彌生《自戀庭園》金屬球體與小澤剛作品。", reminder: "" },
+        { id: 410, time: "12:00", cat: "景點", title: "杉本博司時間的迴廊", address: "香川県香川郡直島町3419", mapcode: "", notes: "展出杉本博司攝影作品與玻璃茶室「聞鳥庵」。", reminder: "重要預約代號: 已預約 12:00 (含茶點)" },
+        { id: 411, time: "12:30", cat: "景點", title: "草間彌生 黃南瓜 (黄かぼちゃ)", address: "香川県香川郡直島町", mapcode: "", notes: "直島最具代表性的地標，突伸入海的黃色南瓜。", reminder: "" },
+        { id: 412, time: "12:45", cat: "景點", title: "恵美須神社", address: "香川県香川郡直島町", mapcode: "", notes: "海邊小型鳥居與石造神社。", reminder: "" },
+        { id: 413, time: "13:18 – 13:32", cat: "交通", title: "Shuttle: Tsutsuji-so → Chichu Art Museum", address: "地中美術館停車場", mapcode: "", notes: "搭乘內部接駁車返回停車場。", reminder: "" },
+        { id: 414, time: "13:45", cat: "交通", title: "→ 本村地區無料駐車場", address: "3299-34 Honmura, Naoshima", mapcode: "871 120 512*22", notes: "停妥車輛前往本村午餐與藝廊。", reminder: "" },
+        { id: 415, time: "13:45 – 14:30", cat: "美食", title: "カフェサロン中奥 (Cafe Salon Nakaoku)", address: "香川県香川郡直島町本村中奧1167", phone: "+81 087-892-3887", mapcode: "", notes: "位於巷弄內的隱密古民家咖啡廳。", reminder: "必點菜單: 咖哩蛋包飯" },
+        { id: 416, time: "14:45 – 15:45", cat: "景點", title: "本村 | 直島新美術館", address: "香川県香川郡直島町3419", mapcode: "", notes: "安藤忠雄設計，2025新開幕藝術空間。", reminder: "門票: 線上 1,500円" },
+        { id: 417, time: "16:00", cat: "美食", title: "Naoshima Gelato (直島ジェラート)", address: "香川県香川郡直島町843-1", mapcode: "871 120 873*86", notes: "營業時間 13:00 ~ 17:00。", reminder: "必點菜單: 在地水果義式冰淇淋" },
+        { id: 418, time: "16:05 – 16:15", cat: "交通", title: "→ 直島町立宮浦港停車場", address: "香川県香川郡直島町宮ノ浦2249-22", mapcode: "19 147 516*51", notes: "準備還車與乘船。", reminder: "" },
+        { id: 419, time: "16:15", cat: "交通", title: "→ 四國汽船 直島 宮浦港", address: "香川県香川郡直島町2249-40", phone: "087-892-3104", mapcode: "19 147 398*26", notes: "購票準備回高松。", reminder: "" },
+        { id: 420, time: "16:20 – 16:35", cat: "景點", title: "宮浦 |「I♥湯」錢湯", address: "香川県香川郡直島町2252-2", mapcode: "", notes: "藝術家大竹伸朗創作的大眾澡堂，色彩繽紛極具特色。", reminder: "門票: 660円" },
+        { id: 421, time: "17:00 – 18:00", cat: "交通", title: "直島 (宮浦) → 高松", address: "高松港", mapcode: "", notes: "航程約 60 分鐘，返回高松。", reminder: "" }
+      ],
+      5: [
+        { id: 501, time: "12:30", cat: "交通", title: "還車 (Takamatsu)", address: "租車公司營業所", mapcode: "", notes: "加滿油後於高松營業所歸還車輛，結束自駕行程。", reminder: "重要提醒: 記得索取加油發票" }
+      ],
+      6: [
+        { id: 601, time: "08:30 – 20:00", cat: "活動", title: "USJ (日本環球影城)", address: "大阪府大阪市此花区桜島２丁目１−33", mapcode: "1 247 344*41", notes: "全天暢玩超級任天堂世界、哈利波特魔法世界等園區。", reminder: "重要預約代號: 快通 Ex-Pass 7" }
+      ],
+      7: [
+        { id: 701, time: "20:40 – 23:50", cat: "交通", title: "回程航班 (KIX → HKG)", address: "關西國際機場 (KIX)", mapcode: "", notes: "UO689 班機返回香港，結束愉快四國岡山旅程。", reminder: "必買伴手禮: 關西免稅店限定點心" }
+      ]
+    };
 
-      const activeBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(dayId));
-      if (activeBtn) {
-        activeBtn.classList.add('active');
+    // 住宿資料庫
+    let hotelData = [
+      { id: 1, name: "Fav Hotel Takamatsu", cat: "Hotel", date: "Day 1 (10/14)", checkin: "15:00", checkout: "10:00", confirm: "#FH-883921", mapcode: "60 607 301*65 / +81 87-885-0114", notice: "櫃檯服務至22:00，現場需支付住宿稅", room: "雙人房 / 含早餐 / 禁菸", notes: "房間空間寬敞，附有微波爐與小廚房。" },
+      { id: 2, name: "Edit x seven Setouchi Shodoshima", cat: "Hotel", date: "Day 2 (10/15)", checkin: "16:00", checkout: "10:00", confirm: "#EXS-202610", mapcode: "364 802 800*16", notice: "無人自助 Check-in，請注意信箱密碼", room: "海景雙人套房", notes: "位於小豆島安田區，環境寧靜。" },
+      { id: 3, name: "Yado Storo", cat: "Airbnb", date: "Day 3 (10/16)", checkin: "16:00", checkout: "10:00", confirm: "#HM-99812", mapcode: "19 082 173*77", notice: "鄰近宇野港，步行5分鐘可達", room: "整套日式包棟民家", notes: "準備前往直島的極佳住宿點。" }
+    ];
+
+    // 記帳資料庫
+    let expenseData = [
+      { id: 1, title: "一鶴骨付鳥晚餐", cat: "美食", amount: 4800 },
+      { id: 2, title: "栗林公園入園門票+和船", cat: "景點", amount: 1220 },
+      { id: 3, title: "高松5日自駕租車全包", cat: "交通", amount: 32000 }
+    ];
+
+    /* ---------------------------------------------------
+       2. 主題與 Tabs 控制
+       --------------------------------------------------- */
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.querySelectorAll('.theme-dot').forEach(dot => dot.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`tab-${tabId}`).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    /* ---------------------------------------------------
+       3. Dashboard (儀表板) 邏輯
+       --------------------------------------------------- */
+    function calcFromJPY(jpy) {
+      const jpyVal = parseFloat(jpy) || 0;
+      document.getElementById('input-hkd').value = (jpyVal * JPY_TO_HKD).toFixed(1);
+      updateTaxBadge(jpyVal);
+    }
+
+    function calcFromHKD(hkd) {
+      const hkdVal = parseFloat(hkd) || 0;
+      const jpyVal = Math.round(hkdVal / JPY_TO_HKD);
+      document.getElementById('input-jpy').value = jpyVal;
+      updateTaxBadge(jpyVal);
+    }
+
+    function resetCurrency() {
+      document.getElementById('input-jpy').value = '';
+      document.getElementById('input-hkd').value = '';
+      updateTaxBadge(0);
+    }
+
+    function updateTaxBadge(jpy) {
+      const badge = document.getElementById('tax-status');
+      if (jpy >= 5500) {
+        badge.innerText = "✨ 已達免稅";
+        badge.style.backgroundColor = "var(--primary)";
+        badge.style.color = "#ffffff";
+      } else {
+        const diff = 5500 - jpy;
+        badge.innerText = `差 ¥${diff} 免稅`;
+        badge.style.backgroundColor = "var(--primary-light)";
+        badge.style.color = "var(--primary-dark)";
       }
     }
+
+    function setDashboardMode(mode) {
+      document.getElementById('btn-mode-entry').classList.toggle('active', mode === 'entry');
+      document.getElementById('btn-mode-drive').classList.toggle('active', mode === 'drive');
+      document.getElementById('mode-entry-content').style.display = (mode === 'entry') ? 'block' : 'none';
+      document.getElementById('mode-drive-content').style.display = (mode === 'drive') ? 'block' : 'none';
+    }
+
+    function handleImageUpload(e, imgId, placeholderId) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          document.getElementById(imgId).src = evt.target.result;
+          document.getElementById(imgId).style.display = 'block';
+          document.getElementById(placeholderId).style.display = 'none';
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function clearEntryImage() {
+      document.getElementById('entry-img-preview').src = '';
+      document.getElementById('entry-img-preview').style.display = 'none';
+      document.getElementById('entry-placeholder').style.display = 'flex';
+      document.getElementById('entry-file-input').value = '';
+    }
+
+    function clearDriveImage() {
+      document.getElementById('drive-img-preview').src = '';
+      document.getElementById('drive-img-preview').style.display = 'none';
+      document.getElementById('drive-placeholder').style.display = 'flex';
+      document.getElementById('drive-file-input').value = '';
+    }
+
+    function resetDriveInfo() {
+      document.getElementById('parking-spot-input').value = '';
+      clearDriveImage();
+    }
+
+    function switchFlight(index, btn) {
+      document.querySelectorAll('.flight-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = flights[index];
+      const html = `
+        <div class="flight-route">
+          <span class="airport">${f.from}</span>
+          <div class="flight-line-container">
+            <span class="flight-duration">${f.duration}</span>
+            <div class="flight-line"></div>
+            <span class="flight-no">${f.no}</span>
+          </div>
+          <span class="airport">${f.to}</span>
+        </div>
+        <div class="flight-times">
+          <span>${f.dep}</span>
+          <span>${f.arr}</span>
+        </div>
+      `;
+      document.getElementById('flight-card-body').innerHTML = html;
+    }
+
+    /* ---------------------------------------------------
+       4. Itinerary (行程) 邏輯
+       --------------------------------------------------- */
+    function switchDay(day, btn) {
+      currentDay = day;
+      document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
+      if(btn) btn.classList.add('active');
+      
+      const dayLocations = { 1: "高松", 2: "小豆島", 3: "豐島", 4: "直島", 5: "高松", 6: "大阪", 7: "關西" };
+      document.getElementById('current-day-loc').innerText = dayLocations[day] || "高松";
+
+      renderItinerary();
+    }
+
+    function toggleSortMode() {
+      isSortMode = !isSortMode;
+      document.getElementById('sort-btn-text').innerText = isSortMode ? "完成排序" : "排序與管理";
+      renderItinerary();
+    }
+
+    function renderItinerary() {
+      const list = itineraryData[currentDay] || [];
+      const container = document.getElementById('itinerary-list');
+      container.innerHTML = '';
+
+      if (list.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted);">尚無行程，點擊右下角 + 新增</div>`;
+        return;
+      }
+
+      list.forEach((item, index) => {
+        const cardWrapper = document.createElement('div');
+        cardWrapper.className = 'item-card-wrapper';
+
+        let sortArrowsHtml = '';
+        if (isSortMode) {
+          sortArrowsHtml = `
+            <div class="sort-controls">
+              <button class="sort-arrow" onclick="moveItem(${index}, -1)"><i data-lucide="chevron-up" style="width:16px;"></i></button>
+              <button class="sort-arrow" onclick="moveItem(${index}, 1)"><i data-lucide="chevron-down" style="width:16px;"></i></button>
+            </div>
+          `;
+        }
+
+        let catIcon = "camera";
+        if(item.cat === "美食") catIcon = "utensils";
+        else if(item.cat === "交通") catIcon = "car";
+        else if(item.cat === "住宿") catIcon = "bed";
+        else if(item.cat === "活動") catIcon = "ticket";
+
+        // 自動解析攻略標籤
+        let tagsHtml = '';
+        if (item.reminder) {
+          const parts = item.reminder.split(',');
+          parts.forEach(p => {
+            if(p.includes("必吃")) tagsHtml += `<span class="guide-tag tag-food">${p.trim()}</span>`;
+            else if(p.includes("必點")) tagsHtml += `<span class="guide-tag tag-menu">${p.trim()}</span>`;
+            else if(p.includes("必買")) tagsHtml += `<span class="guide-tag tag-gift">${p.trim()}</span>`;
+            else if(p.includes("預約")) tagsHtml += `<span class="guide-tag tag-code">${p.trim()}</span>`;
+            else tagsHtml += `<span class="guide-tag tag-code">${p.trim()}</span>`;
+          });
+        }
+
+        const actionIcon = isSortMode 
+          ? `<button class="icon-btn" onclick="deleteItineraryItem(${item.id})"><i data-lucide="trash-2" style="color:#d96b6b;"></i></button>`
+          : `<button class="icon-btn" onclick="openItineraryModal(${item.id})"><i data-lucide="pencil"></i></button>`;
+
+        const mapSearch = encodeURIComponent(item.address || item.title);
+        const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapSearch}`;
+
+        cardWrapper.innerHTML = `
+          ${sortArrowsHtml}
+          <div class="item-card">
+            <div class="item-header">
+              <div>
+                <span class="time-badge">${item.time}</span>
+                <span class="category-capsule"><i data-lucide="${catIcon}" style="width:12px;"></i> ${item.cat}</span>
+              </div>
+              ${actionIcon}
+            </div>
+            <div class="item-title">${item.title}</div>
+            ${item.address ? `<div class="item-detail"><i data-lucide="map-pin" style="width:14px;"></i> ${item.address}</div>` : ''}
+            ${item.phone ? `<div class="item-detail"><i data-lucide="phone" style="width:14px;"></i> ${item.phone}</div>` : ''}
+            ${item.mapcode ? `<div class="item-detail"><i data-lucide="navigation" style="width:14px;"></i> MAPCODE: <strong>${item.mapcode}</strong></div>` : ''}
+            
+            ${tagsHtml ? `<div class="guide-tags-container">${tagsHtml}</div>` : ''}
+            ${item.notes ? `<div class="item-notes">${item.notes}</div>` : ''}
+
+            <a href="${gmapsUrl}" target="_blank" class="nav-nav-btn">
+              <i data-lucide="navigation-2" style="width:14px;"></i> 快速導航 (Google Maps)
+            </a>
+          </div>
+        `;
+        container.appendChild(cardWrapper);
+      });
+
+      lucide.createIcons();
+    }
+
+    function moveItem(index, direction) {
+      const list = itineraryData[currentDay];
+      const targetIndex = index + direction;
+      if (targetIndex >= 0 && targetIndex < list.length) {
+        const temp = list[index];
+        list[index] = list[targetIndex];
+        list[targetIndex] = temp;
+        renderItinerary();
+      }
+    }
+
+    function deleteItineraryItem(id) {
+      itineraryData[currentDay] = itineraryData[currentDay].filter(item => item.id !== id);
+      renderItinerary();
+    }
+
+    function openItineraryModal(id = null) {
+      editingItineraryId = id;
+      if (id) {
+        const item = itineraryData[currentDay].find(i => i.id === id);
+        document.getElementById('modal-title-input').value = item.title;
+        document.getElementById('modal-location-input').value = item.address || '';
+        const times = item.time.split('–').map(t => t.trim());
+        document.getElementById('modal-start-time').value = times[0] || '';
+        document.getElementById('modal-end-time').value = times[1] || '';
+        document.getElementById('modal-mapcode-input').value = item.mapcode || '';
+        document.getElementById('modal-reminders-input').value = item.reminder || '';
+        document.getElementById('modal-notes-input').value = item.notes || '';
+      } else {
+        document.getElementById('modal-title-input').value = '';
+        document.getElementById('modal-location-input').value = '';
+        document.getElementById('modal-start-time').value = '';
+        document.getElementById('modal-end-time').value = '';
+        document.getElementById('modal-mapcode-input').value = '';
+        document.getElementById('modal-reminders-input').value = '';
+        document.getElementById('modal-notes-input').value = '';
+      }
+      document.getElementById('itinerary-modal').classList.add('active');
+    }
+
+    function closeItineraryModal() {
+      document.getElementById('itinerary-modal').classList.remove('active');
+    }
+
+    function selectModalCat(cat, btn) {
+      currentSelectedCategory = cat;
+      document.querySelectorAll('#modal-cat-selector .capsule-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function saveItineraryItem() {
+      const title = document.getElementById('modal-title-input').value;
+      if (!title) return alert("請輸入標題！");
+
+      const address = document.getElementById('modal-location-input').value;
+      const start = document.getElementById('modal-start-time').value;
+      const end = document.getElementById('modal-end-time').value;
+      const timeStr = end ? `${start} – ${end}` : start;
+      const mapcode = document.getElementById('modal-mapcode-input').value;
+      const reminder = document.getElementById('modal-reminders-input').value;
+      const notes = document.getElementById('modal-notes-input').value;
+
+      if (editingItineraryId) {
+        const item = itineraryData[currentDay].find(i => i.id === editingItineraryId);
+        item.title = title;
+        item.cat = currentSelectedCategory;
+        item.address = address;
+        item.time = timeStr;
+        item.mapcode = mapcode;
+        item.reminder = reminder;
+        item.notes = notes;
+      } else {
+        const newItem = {
+          id: Date.now(),
+          time: timeStr || "12:00",
+          cat: currentSelectedCategory,
+          title: title,
+          address: address,
+          mapcode: mapcode,
+          reminder: reminder,
+          notes: notes
+        };
+        if (!itineraryData[currentDay]) itineraryData[currentDay] = [];
+        itineraryData[currentDay].push(newItem);
+      }
+
+      closeItineraryModal();
+      renderItinerary();
+    }
+
+    /* ---------------------------------------------------
+       5. Accommodation (住宿) 邏輯
+       --------------------------------------------------- */
+    function renderHotels() {
+      const container = document.getElementById('hotel-list');
+      container.innerHTML = '';
+
+      hotelData.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'hotel-card';
+        const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name)}`;
+
+        card.innerHTML = `
+          <div class="card-header">
+            <div>
+              <span class="hotel-tag">${item.cat}</span>
+              <strong style="margin-left:8px;">${item.date}</strong>
+            </div>
+            <button class="icon-btn" onclick="openHotelModal(${item.id})"><i data-lucide="pencil"></i></button>
+          </div>
+          <div class="card-title" style="font-size:18px; margin-bottom:8px;">${item.name}</div>
+          <div class="item-detail"><i data-lucide="clock" style="width:14px;"></i> 入住: ${item.checkin} / 退房: ${item.checkout}</div>
+          ${item.confirm ? `<div class="item-detail"><i data-lucide="file-check" style="width:14px;"></i> Confirmation No: <strong>${item.confirm}</strong></div>` : ''}
+          ${item.mapcode ? `<div class="item-detail"><i data-lucide="map-pin" style="width:14px;"></i> MAPCODE / TEL: ${item.mapcode}</div>` : ''}
+          ${item.room ? `<div class="item-detail"><i data-lucide="bed-double" style="width:14px;"></i> 房型: ${item.room}</div>` : ''}
+          ${item.notice ? `<div style="color:#d96b6b; font-size:13px; font-weight:600; margin-top:6px;"><i data-lucide="alert-circle" style="width:13px; display:inline;"></i> ${item.notice}</div>` : ''}
+          ${item.notes ? `<div class="item-notes">${item.notes}</div>` : ''}
+
+          <a href="${gmapsUrl}" target="_blank" class="nav-nav-btn">
+            <i data-lucide="navigation-2" style="width:14px;"></i> 快速導航
+          </a>
+        `;
+        container.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    function openHotelModal(id = null) {
+      editingHotelId = id;
+      if (id) {
+        const item = hotelData.find(h => h.id === id);
+        document.getElementById('modal-hotel-name').value = item.name;
+        document.getElementById('modal-hotel-date').value = item.date;
+        document.getElementById('modal-hotel-checkin').value = item.checkin;
+        document.getElementById('modal-hotel-checkout').value = item.checkout;
+        document.getElementById('modal-hotel-confirm').value = item.confirm || '';
+        document.getElementById('modal-hotel-mapcode').value = item.mapcode || '';
+        document.getElementById('modal-hotel-notice').value = item.notice || '';
+        document.getElementById('modal-hotel-room').value = item.room || '';
+        document.getElementById('modal-hotel-notes').value = item.notes || '';
+      } else {
+        document.getElementById('modal-hotel-name').value = '';
+        document.getElementById('modal-hotel-date').value = '';
+        document.getElementById('modal-hotel-checkin').value = '';
+        document.getElementById('modal-hotel-checkout').value = '';
+        document.getElementById('modal-hotel-confirm').value = '';
+        document.getElementById('modal-hotel-mapcode').value = '';
+        document.getElementById('modal-hotel-notice').value = '';
+        document.getElementById('modal-hotel-room').value = '';
+        document.getElementById('modal-hotel-notes').value = '';
+      }
+      document.getElementById('hotel-modal').classList.add('active');
+    }
+
+    function closeHotelModal() {
+      document.getElementById('hotel-modal').classList.remove('active');
+    }
+
+    function selectHotelCat(cat, btn) {
+      currentSelectedHotelCat = cat;
+      document.querySelectorAll('#modal-hotel-cat .capsule-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function saveHotelItem() {
+      const name = document.getElementById('modal-hotel-name').value;
+      if(!name) return alert("請輸入住宿名稱！");
+
+      const date = document.getElementById('modal-hotel-date').value || "Day 1";
+      const checkin = document.getElementById('modal-hotel-checkin').value || "15:00";
+      const checkout = document.getElementById('modal-hotel-checkout').value || "10:00";
+      const confirm = document.getElementById('modal-hotel-confirm').value;
+      const mapcode = document.getElementById('modal-hotel-mapcode').value;
+      const notice = document.getElementById('modal-hotel-notice').value;
+      const room = document.getElementById('modal-hotel-room').value;
+      const notes = document.getElementById('modal-hotel-notes').value;
+
+      if (editingHotelId) {
+        const item = hotelData.find(h => h.id === editingHotelId);
+        item.name = name;
+        item.cat = currentSelectedHotelCat;
+        item.date = date;
+        item.checkin = checkin;
+        item.checkout = checkout;
+        item.confirm = confirm;
+        item.mapcode = mapcode;
+        item.notice = notice;
+        item.room = room;
+        item.notes = notes;
+      } else {
+        hotelData.push({
+          id: Date.now(),
+          name, cat: currentSelectedHotelCat, date, checkin, checkout, confirm, mapcode, notice, room, notes
+        });
+      }
+
+      closeHotelModal();
+      renderHotels();
+    }
+
+    /* ---------------------------------------------------
+       6. Budget (記帳) 邏輯
+       --------------------------------------------------- */
+    function renderBudget() {
+      const container = document.getElementById('expense-list');
+      container.innerHTML = '';
+
+      let totalJpy = 0;
+
+      expenseData.forEach(item => {
+        totalJpy += item.amount;
+        const row = document.createElement('div');
+        row.className = 'expense-item';
+        row.innerHTML = `
+          <div class="expense-left">
+            <span class="expense-cat">${item.cat}</span>
+            <span class="expense-title">${item.title}</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span class="expense-amount">¥${item.amount.toLocaleString()}</span>
+            <button class="icon-btn" onclick="deleteExpense(${item.id})"><i data-lucide="trash-2" style="width:16px;"></i></button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+
+      document.getElementById('total-jpy').innerText = `¥${totalJpy.toLocaleString()}`;
+      document.getElementById('total-hkd').innerText = `$${(totalJpy * JPY_TO_HKD).toFixed(1)}`;
+
+      lucide.createIcons();
+    }
+
+    function addExpense() {
+      const name = document.getElementById('expense-name').value;
+      const cat = document.getElementById('expense-category').value;
+      const amount = parseFloat(document.getElementById('expense-amount').value);
+
+      if(!name || isNaN(amount)) return alert("請輸入完整的項目名稱與金額！");
+
+      expenseData.push({ id: Date.now(), title: name, cat, amount });
+      document.getElementById('expense-name').value = '';
+      document.getElementById('expense-amount').value = '';
+      renderBudget();
+    }
+
+    function deleteExpense(id) {
+      expenseData = expenseData.filter(e => e.id !== id);
+      renderBudget();
+    }
+
+    /* ---------------------------------------------------
+       7. 初始化頁面
+       --------------------------------------------------- */
+    window.onload = function() {
+      switchFlight(0, document.querySelectorAll('.flight-tab')[0]);
+      renderItinerary();
+      renderHotels();
+      renderBudget();
+      lucide.createIcons();
+    };
   </script>
 </body>
 </html>
