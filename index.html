@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Takamatsu Oct 2026 - 旅遊小工具</title>
+  <title>TAKAMATSU 2026 - 旅遊小工具</title>
   
   <!-- Google Font: Noto Serif SC -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,6 @@
     }
 
     [data-theme="sage"] {
-      --theme-primary: #b0c4de;
       --theme-primary: #a3b18a;
       --theme-secondary: #f0f3ed;
       --theme-border: #dadfcd;
@@ -257,7 +256,7 @@
     .weather-item i.weather-icon {
       font-size: 20px;
       margin: 8px 0;
-      color: #f39c12; /* 天氣採用正常色彩 */
+      color: #f39c12;
     }
 
     /* 入境 / 自駕模式分頁按鈕 */
@@ -510,11 +509,12 @@
     .tag-menu { background: #e1bee7; color: #4a148c; }
     .tag-gift { background: #c8e6c9; color: #1b5e20; }
     .tag-booking { background: #bbdefb; color: #0d47a1; }
+    .tag-info { background: #e0f7fa; color: #006064; }
 
     .mapcode-text {
       font-size: 13px;
       color: var(--text-muted);
-      margin: 6px 0;
+      margin: 4px 0;
     }
 
     .nav-link-btn {
@@ -669,7 +669,7 @@
     <!-- 1. 置頂標題與莫蘭迪主題切換 -->
     <div class="header">
       <div class="header-title">
-        <h1>Takamatsu Oct 2026</h1>
+        <h1>TAKAMATSU 2026</h1>
       </div>
       <div class="theme-selector">
         <div class="theme-dot dot-rose active" onclick="setTheme('rose')"></div>
@@ -680,7 +680,7 @@
       </div>
     </div>
 
-    <!-- 2. 主選單 Tab (僅放在大標題下方) -->
+    <!-- 2. 主選單 Tab -->
     <div class="nav-tabs">
       <div class="nav-item active" onclick="switchTab('home')"><i class="fa-solid fa-house"></i>首頁</div>
       <div class="nav-item" onclick="switchTab('itinerary')"><i class="fa-solid fa-map-location-dot"></i>行程</div>
@@ -718,13 +718,13 @@
           <div class="card-title"><i class="fa-solid fa-cloud-sun"></i> 一週天氣預報 (高松)</div>
         </div>
         <div class="weather-scroll">
-          <div class="weather-item"><div>週一</div><i class="fa-solid fa-sun weather-icon"></i><div>22°C</div></div>
-          <div class="weather-item"><div>週二</div><i class="fa-solid fa-cloud-sun weather-icon"></i><div>21°C</div></div>
-          <div class="weather-item"><div>週三</div><i class="fa-solid fa-cloud-rain weather-icon" style="color:#3498db;"></i><div>18°C</div></div>
-          <div class="weather-item"><div>週四</div><i class="fa-solid fa-sun weather-icon"></i><div>23°C</div></div>
-          <div class="weather-item"><div>週五</div><i class="fa-solid fa-cloud weather-icon" style="color:#95a5a6;"></i><div>20°C</div></div>
-          <div class="weather-item"><div>週六</div><i class="fa-solid fa-sun weather-icon"></i><div>24°C</div></div>
-          <div class="weather-item"><div>週日</div><i class="fa-solid fa-cloud-sun weather-icon"></i><div>22°C</div></div>
+          <div class="weather-item"><div>Day 1</div><i class="fa-solid fa-sun weather-icon"></i><div>22°C</div></div>
+          <div class="weather-item"><div>Day 2</div><i class="fa-solid fa-cloud-sun weather-icon"></i><div>21°C</div></div>
+          <div class="weather-item"><div>Day 3</div><i class="fa-solid fa-cloud-sun weather-icon"></i><div>20°C</div></div>
+          <div class="weather-item"><div>Day 4</div><i class="fa-solid fa-sun weather-icon"></i><div>23°C</div></div>
+          <div class="weather-item"><div>Day 5</div><i class="fa-solid fa-cloud weather-icon" style="color:#95a5a6;"></i><div>20°C</div></div>
+          <div class="weather-item"><div>Day 6</div><i class="fa-solid fa-sun weather-icon"></i><div>24°C</div></div>
+          <div class="weather-item"><div>Day 7</div><i class="fa-solid fa-cloud-sun weather-icon"></i><div>22°C</div></div>
         </div>
       </div>
 
@@ -757,7 +757,7 @@
         <!-- 自駕模式內容 -->
         <div id="mode-drive-content" style="display:none;">
           <div class="card-title-row">
-            <div class="card-title"><i class="fa-solid fa-square-parking"></i> 停車位置</div>
+            <div class="card-title"><i class="fa-solid fa-square-parking"></i> 停車位置速記</div>
             <div>
               <button class="icon-btn" onclick="resetParking()"><i class="fa-solid fa-rotate-right"></i></button>
               <button class="icon-btn" onclick="clearUpload('drive-img')"><i class="fa-solid fa-trash"></i></button>
@@ -800,9 +800,8 @@
           <div class="card-title"><i class="fa-solid fa-plane"></i> 航班資訊</div>
         </div>
         <div class="toggle-btn-group">
-          <button class="toggle-btn active" id="f-btn-1" onclick="switchFlight(1)">去程 13/10</button>
-          <button class="toggle-btn" id="f-btn-2" onclick="switchFlight(2)">轉機 14/10</button>
-          <button class="toggle-btn" id="f-btn-3" onclick="switchFlight(3)">回程 20/10</button>
+          <button class="toggle-btn active" id="f-btn-1" onclick="switchFlight(1)">去程 Day 1</button>
+          <button class="toggle-btn" id="f-btn-2" onclick="switchFlight(2)">回程 Day 7</button>
         </div>
         
         <div id="flight-info-content">
@@ -860,7 +859,7 @@
 
         <div class="card-title" style="margin-bottom:12px;"><i class="fa-solid fa-plus"></i> 新增開銷項目</div>
         <div class="form-group">
-          <input type="text" id="exp-name" class="form-control" placeholder="項目名稱 (如: 伴手禮、烏龍麵午餐)">
+          <input type="text" id="exp-name" class="form-control" placeholder="項目名稱 (如: 門票、拉麵)">
         </div>
         <div class="form-row">
           <div class="form-group">
@@ -884,7 +883,7 @@
     </div>
 
     <!-- 浮動新增按鈕 (FAB) -->
-    <button class="fab-btn" id="fab-add" onclick="handleFabClick()"><i class="fa-solid fa-plus"></i></button>
+    <button class="fab-btn" id="fab-add" style="display:none;" onclick="handleFabClick()"><i class="fa-solid fa-plus"></i></button>
 
   </div>
 
@@ -921,11 +920,19 @@
       </div>
       <div class="form-group">
         <label>MAPCODE</label>
-        <input type="text" id="modal-mapcode" class="form-control" placeholder="例如：60 607 880*11">
+        <input type="text" id="modal-mapcode" class="form-control" placeholder="例如：228 877 247*20">
+      </div>
+      <div class="form-group">
+        <label>電話</label>
+        <input type="text" id="modal-phone" class="form-control" placeholder="+81 878-76-5280">
+      </div>
+      <div class="form-group">
+        <label>地址</label>
+        <input type="text" id="modal-address" class="form-control" placeholder="輸入詳細地址">
       </div>
       <div class="form-group">
         <label>重要提醒 / 攻略 <span style="float:right; color:var(--theme-primary); cursor:pointer;" onclick="addReminderHint()">+ 新增提醒</span></label>
-        <input type="text" id="modal-tips" class="form-control" placeholder="關鍵字如: 必吃美食: 骨付鳥">
+        <input type="text" id="modal-tips" class="form-control" placeholder="關鍵字如: 必吃美食: 骨付鳥 / 票價: 2600円">
       </div>
       <div class="form-group">
         <label>備註</label>
@@ -952,11 +959,11 @@
       </div>
       <div class="form-group">
         <label>住宿名稱</label>
-        <input type="text" id="acc-name" class="form-control" placeholder="如：高松皇家花園酒店">
+        <input type="text" id="acc-name" class="form-control" placeholder="如：Fav Hotel">
       </div>
       <div class="form-group">
         <label>日期</label>
-        <input type="text" id="acc-date" class="form-control" placeholder="如：Day 1 (10/13)">
+        <input type="text" id="acc-date" class="form-control" placeholder="如：Day 1">
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -969,20 +976,12 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Confirmation No.</label>
-        <input type="text" id="acc-conf" class="form-control" placeholder="預約編號">
-      </div>
-      <div class="form-group">
         <label>MAPCODE / 電話</label>
         <input type="text" id="acc-map" class="form-control" placeholder="MapCode 或 電話號碼">
       </div>
       <div class="form-group">
-        <label>入住須知 / 攻略</label>
-        <input type="text" id="acc-notice" class="form-control" placeholder="警示提醒: 需現場支付住宿稅">
-      </div>
-      <div class="form-group">
-        <label>房型</label>
-        <input type="text" id="acc-type" class="form-control" placeholder="例如：雙人房 / 含早餐 / 禁菸">
+        <label>地址</label>
+        <input type="text" id="acc-address" class="form-control" placeholder="住宿地址">
       </div>
       <button class="action-btn" onclick="saveAccModal()">儲存變更</button>
     </div>
@@ -997,24 +996,94 @@
     let editingAccId = null;
 
     const flights = {
-      1: { loc1: "HKG", loc2: "HND", code: "UO628", time: "20:00 - 01:20+1", dur: "4h 20m" },
-      2: { loc1: "HND", loc2: "TAK", code: "JL477", time: "09:45 - 11:10", dur: "1h 25m" },
-      3: { loc1: "KIX", loc2: "HKG", code: "UO689", time: "20:40 - 23:50", dur: "4h 10m" }
+      1: { loc1: "HKG", loc2: "TAK", code: "JL477", time: "09:45 - 11:10", dur: "1h 25m" },
+      2: { loc1: "KIX", loc2: "HKG", code: "UO689", time: "20:40 - 23:50", dur: "4h 10m" }
     };
 
+    // 使用者提供的完整 7 天行程數據
     let itineraryData = [
-      { id: 1, day: 1, cat: '交通', title: '高松機場領車', start: '11:30', end: '12:00', mapcode: '60 607 880*11', tips: '重要預約代號: RENT-9921', notes: '確認車輛刮痕並索取MapCode表' },
-      { id: 2, day: 1, cat: '美食', title: '一鶴骨付鳥 (高松本店)', start: '12:30', end: '13:30', mapcode: '60 607 331*22', tips: '必吃美食: 嫩雞(雛鳥), 必點菜單: 雞肉飯', notes: '香川縣在地名物，皮脆肉汁豐富' },
-      { id: 3, day: 1, cat: '景點', title: '栗林公園', start: '14:00', end: '16:00', mapcode: '60 467 123*44', tips: '必買伴手禮: 抹茶煎餅', notes: '一步一景的米其林三星名園，可體驗乘坐和船' }
+      // Day 1
+      { id: 101, day: 1, cat: '交通', title: 'JL477 抵達高松，取車', start: '09:45', end: '11:10', mapcode: '', phone: '', address: '', tips: '', notes: '抵達高松機場後進行取車程序' },
+      { id: 102, day: 1, cat: '交通', title: '高松機場 → ヤドン公園駐車場', start: '12:30', end: '13:00', mapcode: '228 877 247*20', phone: '+81 878-76-5280', address: '〒761-2304 香川県綾歌郡綾川町萱原253-7（小羽毛池跡）', tips: '', notes: '' },
+      { id: 103, day: 1, cat: '景點', title: '呆呆獸公園（ヤドン公園）', start: '13:00', end: '13:30', mapcode: '', phone: '', address: '', tips: '', notes: '通称「ヤドン公園」' },
+      { id: 104, day: 1, cat: '交通', title: '金刀比羅宮 Nice Parking', start: '13:30', end: '14:00', mapcode: '77 353 864*26', phone: '+81 087-885-0114', address: '〒766-0001 香川県仲多度郡琴平町川西７４５−１', tips: '', notes: '' },
+      { id: 105, day: 1, cat: '景點', title: '金刀比羅宮', start: '14:00', end: '15:30', mapcode: '', phone: '+81 877-75-2121', address: '〒766-8501 香川県仲多度郡琴平町892-1', tips: '', notes: '' },
+      { id: 106, day: 1, cat: '交通', title: '→ 四國水族館 停車場', start: '15:40', end: '16:15', mapcode: '77 802 757*45', phone: '+81 0877-49-4590', address: '〒769-0201 香川県綾歌郡宇多津町浜一番丁4番地', tips: '備用Mapcode: 77 832 128*42', notes: '' },
+      { id: 107, day: 1, cat: '景點', title: '四國水族館', start: '16:30', end: '18:00', mapcode: '', phone: '', address: '', tips: '票價: 大人 2600円', notes: '營業時間：9:00 - 18:00' },
+      { id: 108, day: 1, cat: '住宿', title: 'Fav Hotel', start: '19:00', end: '20:00', mapcode: '60 607 301*65', phone: '', address: '〒760-0062 香川県高松市塩上町２丁目４−２0', tips: '', notes: '入住 Check-in' },
+
+      // Day 2
+      { id: 201, day: 2, cat: '交通', title: '→ 高松のりば (小豆島渡輪營業所)', start: '07:00', end: '07:15', mapcode: '60 666 095*58', phone: '087-822-4383', address: '香川県高松市サンポート8-22 サンポート高松 フェリーセンター内', tips: '', notes: '小豆島行きフェリーセンター' },
+      { id: 202, day: 2, cat: '交通', title: '高松 → 土庄 (小豆島航程)', start: '08:02', end: '09:02', mapcode: '', phone: '', address: '', tips: '', notes: '乘船前往小豆島土庄港' },
+      { id: 203, day: 2, cat: '景點', title: '小豆島観光協会（土庄港観光案内所）', start: '09:05', end: '09:15', mapcode: '364 846 213*08', phone: '+81 879-82-1775', address: '〒761-4101 香川県小豆郡土庄町甲6194-11（土庄港轉運站大樓內）', tips: '', notes: '' },
+      { id: 204, day: 2, cat: '交通', title: '→ 中山千枚田 臨時駐車場', start: '09:15', end: '09:30', mapcode: '364 884 883*85', phone: '+81 0879-82-1775', address: '〒761-4303 香川県小豆郡小豆島町中山', tips: '', notes: '小豆島觀光協會電話' },
+      { id: 205, day: 2, cat: '景點', title: '中山千枚田 (擁抱小豆島)', start: '09:30', end: '10:15', mapcode: '', phone: '', address: '', tips: '', notes: '' },
+      { id: 206, day: 2, cat: '交通', title: '→ 天使之路 第一駐車場', start: '10:15', end: '10:30', mapcode: '364 817 118*45', phone: '+81 0879-62-2801', address: '〒761-4106 香川県小豆郡土庄町甲24-92', tips: '景點Mapcode: 364 787 899*84', notes: '電話為天使之路商店' },
+      { id: 207, day: 2, cat: '景點', title: '天使の散歩道 (エンジェルロード)', start: '10:45', end: '11:30', mapcode: '', phone: '', address: '', tips: '情報: 白天 05:12~11:12 (乾潮08:12), 傍晚 17:30~23:30 (乾潮20:30)', notes: '注意潮汐時間渡海' },
+      { id: 208, day: 2, cat: '美食', title: '小豆島ラーメン Hishio エンジェルロード店', start: '11:45', end: '12:45', mapcode: '', phone: '+81 0879-62-8720', address: '〒761-4100 香川県小豆郡土庄町甲24-18', tips: '必吃美食: 醬油拉麵', notes: '營業時間：11:00～20:00 (LO 17:45)' },
+      { id: 209, day: 2, cat: '景點', title: '富丘八幡神社', start: '12:50', end: '13:00', mapcode: '364 818 833*57', phone: '0879-62-1538', address: '〒761-4121 香川県小豆郡土庄町渕崎甲2421', tips: '備用Mapcode: 364 818 798*73', notes: '鳥居前入口處' },
+      { id: 210, day: 2, cat: '交通', title: '→ 道の駅 第3駐車場 (小豆島オリーブ公園)', start: '13:00', end: '13:20', mapcode: '364 798 305*82', phone: '+81 879-82-2200', address: '〒761-4434 香川県小豆郡小豆島町西村甲1941-1', tips: '', notes: '' },
+      { id: 211, day: 2, cat: '景點', title: '橄欖公園 (道の駅 小豆島オリーブ公園)', start: '13:30', end: '15:00', mapcode: '', phone: '', address: '', tips: '', notes: '營業時間：8:30 - 17:00' },
+      { id: 212, day: 2, cat: '交通', title: '→ 丸金醬油紀念館停車場', start: '15:15', end: '15:30', mapcode: '364 773 589*62', phone: '+81 0879-82-1011', address: '〒761-4421 香川県小豆郡小豆島町苗羽甲1850', tips: '', notes: '位於紀念館與物產館兩側道路旁' },
+      { id: 213, day: 2, cat: '景點', title: '丸金醬油紀念館 醤の郷', start: '15:30', end: '15:45', mapcode: '', phone: '', address: '', tips: '票價: 大人 500円', notes: '營業時間：9:00 - 16:00' },
+      { id: 214, day: 2, cat: '住宿', title: 'Edit x seven Setouchi Shodoshima', start: '16:00', end: '16:15', mapcode: '364 802 800*16', phone: '', address: '〒761-4411 香川県小豆郡小豆島町安田甲144-21', tips: '', notes: '辦理入住Check-in' },
+
+      // Day 3
+      { id: 301, day: 3, cat: '美食', title: 'Minori Gelato 冰淇淋', start: '12:00', end: '12:05', mapcode: '364 831 124*37', phone: '+81 0879-62-8181', address: '〒761-4432 香川県小豆郡小豆島町草壁本町1055-2', tips: '必吃美食: 義式冰淇淋', notes: '營業時間：12:00～18:00 (LO 17:45)，週三四公休' },
+      { id: 302, day: 3, cat: '交通', title: '→ 土庄港 小豆島豊島フェリー乗り場', start: '12:05', end: '12:30', mapcode: '364 846 300*51', phone: '+81 87-962-1348', address: '〒761-4101 香川県小豆郡土庄町甲', tips: '', notes: '準備搭乘渡輪前往豐島' },
+      { id: 303, day: 3, cat: '交通', title: '土庄 (小豆島) → 唐櫃 (豊島)', start: '13:10', end: '13:40', mapcode: '', phone: '', address: '', tips: '', notes: '所要時間：約30分鐘' },
+      { id: 304, day: 3, cat: '交通', title: '→ 豐島美術館與梯田專用停車場', start: '13:45', end: '13:50', mapcode: '871 251 333*31', phone: '+81 879683555', address: '〒 香川県小豆郡土庄町豊島唐櫃1771', tips: '館區Mapcode: 871 251 334*74', notes: '' },
+      { id: 305, day: 3, cat: '景點', title: '唐櫃 | 豊島美術館', start: '14:00', end: '16:00', mapcode: '', phone: '', address: '', tips: '票價: 線上 1800円 / 窗口 2000円', notes: '營業時間：10:00〜16:00 (最終15:30)，週二閉館' },
+      { id: 306, day: 3, cat: '景點', title: '唐櫃 | 豐島美術館前山坡賞梯田、海景', start: '16:00', end: '16:05', mapcode: '', phone: '', address: '', tips: '', notes: '沿著「縣道255號」坡地制高點俯瞰瀨戶內海' },
+      { id: 307, day: 3, cat: '景點', title: '唐櫃 | 藝術作品：多重籃框', start: '16:05', end: '16:20', mapcode: '871 252 273*08', phone: '', address: '〒 香川県小豆郡土庄町豊島唐櫃2614', tips: '', notes: '作品名：勝者はいない─マルチ・バスケットボール' },
+      { id: 308, day: 3, cat: '景點', title: '唐櫃 | Les Archives du Coeur (心臟音資料館)', start: '16:05', end: '16:30', mapcode: '', phone: '', address: '〒 香川県小豆郡土庄町豊島唐櫃2801-1', tips: '票價: 線上 600円 / 窗口 700円', notes: '營業時間：10:00〜16:00 (最終15:30)，週二閉館' },
+      { id: 309, day: 3, cat: '交通', title: '→ 唐櫃港 小豆島豊島フェリー售票處', start: '16:30', end: '18:20', mapcode: '871 251 383*71', phone: '+81 87-968-3239', address: '〒761-4662 香川県小豆郡土庄町豊島唐櫃２５３０−１１', tips: '', notes: '準備搭乘渡輪前往宇野' },
+      { id: 310, day: 3, cat: '交通', title: '唐櫃 (豊島) → 宇野 (渡輪)', start: '18:20', end: '19:19', mapcode: '', phone: '', address: '', tips: '', notes: '所要時間：約59分鐘' },
+      { id: 311, day: 3, cat: '住宿', title: 'Yado Storo', start: '19:19', end: '19:25', mapcode: '19 082 173*77', phone: '', address: '〒706-0011 岡山県玉野市宇野2丁目4-8', tips: '備用Mapcode: 19 082 165*65', notes: '宇野站前區域 / 辦理入住' },
+
+      // Day 4
+      { id: 401, day: 4, cat: '交通', title: '→ 四國汽船 宇野港渡輪售票處 (往直島)', start: '07:45', end: '07:50', mapcode: '19 264 704*85', phone: '0863-31-1641', address: '岡山県玉野市築港1丁目3-2番地', tips: '備用Mapcode: 19 264 705*67', notes: '各渡輪出航前30分鐘開始售票' },
+      { id: 402, day: 4, cat: '交通', title: '宇野 → 宮浦 (直島)', start: '08:22', end: '08:42', mapcode: '', phone: '', address: '', tips: '', notes: '所要時間：約20分鐘' },
+      { id: 403, day: 4, cat: '交通', title: '→ 直島町立宮浦港停車場', start: '08:50', end: '08:50', mapcode: '19 147 516*51', phone: '', address: '〒761-3110 香川県香川郡直島町宮ノ浦2249-22', tips: '', notes: '' },
+      { id: 404, day: 4, cat: '景點', title: '宮浦港 | 紅南瓜、海邊驛站、直島展覽館', start: '08:50', end: '09:30', mapcode: '', phone: '', address: '', tips: '', notes: '宮浦港周邊地標打卡' },
+      { id: 405, day: 4, cat: '交通', title: '→ 地中美術館 停車場', start: '09:40', end: '09:45', mapcode: '19 118 560*02', phone: '', address: '〒 香川県香川郡直島町3449−1', tips: '', notes: '' },
+      { id: 406, day: 4, cat: '景點', title: '地中美術館', start: '10:00', end: '11:00', mapcode: '', phone: '', address: '', tips: '票價: 線上 2700円 / 窗口 3000円', notes: '營業時間：10:00〜17:00 (最終16:00)，週一閉館' },
+      { id: 407, day: 4, cat: '景點', title: '李禹煥美術館', start: '10:00', end: '11:00', mapcode: '', phone: '', address: '〒 香川県香川郡直島町字倉浦1390', tips: '票價: 線上 1200円 / 窗口 1400円', notes: '營業時間：10:00〜17:00 (最終16:00)，週一閉館' },
+      { id: 408, day: 4, cat: '景點', title: '直島當代美術館 – 倍樂生之家 Benesse House', start: '11:30', end: '12:30', mapcode: '', phone: '', address: '〒 香川県香川郡直島町3419', tips: '票價: 線上 1300円 / 窗口 1500円', notes: '營業時間：08:00〜21:00 (最終20:00)，全年無休' },
+      { id: 409, day: 4, cat: '景點', title: 'Valley Gallery (NA25-B)', start: '11:45', end: '12:00', mapcode: '', phone: '', address: '', tips: '', notes: '倍樂生之家展區之一' },
+      { id: 410, day: 4, cat: '景點', title: '杉本博司時間的迴廊', start: '12:00', end: '12:30', mapcode: '', phone: '', address: '', tips: '重要預約代號: Booked 12:00, 票價: 線上 1600円 / 窗口 1700円', notes: '含 Tea and sweets。營業時間：11:00〜15:00' },
+      { id: 411, day: 4, cat: '景點', title: '草間彌生 黃南瓜 (黄かぼちゃ)', start: '12:30', end: '12:45', mapcode: '', phone: '', address: '', tips: '', notes: '直島地標黃南瓜' },
+      { id: 412, day: 4, cat: '景點', title: '恵美須神社', start: '12:45', end: '13:00', mapcode: '', phone: '', address: '', tips: '', notes: '' },
+      { id: 413, day: 4, cat: '交通', title: 'Shuttle Bus → 地中美術館 停車場', start: '13:18', end: '13:32', mapcode: '', phone: '', address: '', tips: '情報: 班次 12:53-13:07 / 13:18-13:32', notes: '路線：Tsutsuji-so → Chichu Art Museum' },
+      { id: 414, day: 4, cat: '交通', title: '→ 本村地區無料駐車場', start: '13:45', end: '13:45', mapcode: '871 120 512*22', phone: '', address: '3299-34 Honmura, Naoshima, Kagawa 761-3110', tips: '', notes: '' },
+      { id: 415, day: 4, cat: '美食', title: 'カフェサロン中奥', start: '13:45', end: '14:30', mapcode: '', phone: '+81 087-892-3887', address: '〒761-3110 香川県香川郡直島町本村中奧1167', tips: '必吃美食: 咖哩蛋包飯', notes: '營業時間：週三至週日 11:30-15:00 (LO 14:40)' },
+      { id: 416, day: 4, cat: '景點', title: '本村 | 直島新美術館', start: '14:45', end: '15:45', mapcode: '', phone: '', address: '〒 香川県香川郡直島町3419', tips: '票價: 線上 1500円 / 窗口 1700円', notes: '營業時間：10:00 ～ 16:30 (最終16:00)' },
+      { id: 417, day: 4, cat: '美食', title: 'Naoshima Gelato (直島ジェラート)', start: '16:00', end: '16:05', mapcode: '871 120 873*86', phone: '', address: '〒 香川県香川郡直島町843-1', tips: '必吃美食: Gelato 冰淇淋', notes: '營業時間：13:00 ~ 17:00' },
+      { id: 418, day: 4, cat: '交通', title: '→ 直島町立宮浦港停車場', start: '16:05', end: '16:15', mapcode: '19 147 516*51', phone: '', address: '〒761-3110 香川県香川郡直島町宮ノ浦2249-22', tips: '', notes: '' },
+      { id: 419, day: 4, cat: '交通', title: '→ 四國汽船 直島 宮浦港售票處', start: '16:15', end: '16:20', mapcode: '19 147 398*26', phone: '087-892-3104', address: '〒761-3110 香川県香川郡直島町2249-40', tips: '', notes: '' },
+      { id: 420, day: 4, cat: '景點', title: '宮浦 |「I♥湯」錢湯', start: '16:20', end: '16:35', mapcode: '', phone: '', address: '〒 香川県香川郡直島町2252-2', tips: '票價: 660円', notes: '室見學會參觀於六日及公眾假期 13:00~15:50 舉行' },
+      { id: 421, day: 4, cat: '交通', title: '直島（宮浦）→ 高松 (渡輪)', start: '17:00', end: '18:00', mapcode: '', phone: '', address: '', tips: '', notes: '所要時間：約60分鐘' },
+
+      // Day 5
+      { id: 501, day: 5, cat: '交通', title: '還車流程', start: '12:30', end: '13:00', mapcode: '', phone: '', address: '', tips: '重要預約代號: RENT-RETURN', notes: '辦理還車手續，確認油箱加滿與車況' },
+
+      // Day 6
+      { id: 601, day: 6, cat: '活動', title: 'USJ (日本環球影城)', start: '08:30', end: '20:00', mapcode: '', phone: '', address: '大阪府大阪市此花区桜島２丁目1-33', tips: '重要預約代號: USJ-EXPRESS', notes: '整天樂園暢玩行程' },
+
+      // Day 7
+      { id: 701, day: 7, cat: '交通', title: 'UO689 返港航班 (關西 KIX → 香港 HKG)', start: '20:40', end: '23:50', mapcode: '', phone: '', address: '', tips: '', notes: '搭機返回香港，結束愉快旅程' }
     ];
 
     let accommodationData = [
-      { id: 1, cat: 'Hotel', name: '高松皇家花園酒店', date: 'Day 1 - Day 3 (10/13 - 10/15)', inTime: '15:00', outTime: '11:00', conf: 'BK-992182', map: '60 607 111*00', notice: '櫃檯服務至22:00，現場需付住宿稅', type: '雙人房 / 含早餐 / 禁菸' }
+      { id: 1, cat: 'Hotel', name: 'Fav Hotel', date: 'Day 1 (高松)', inTime: '19:00', outTime: '10:00', map: '60 607 301*65', address: '〒760-0062 香川県高松市塩上町２丁目４−２0' },
+      { id: 2, cat: 'Hotel', name: 'Edit x seven Setouchi Shodoshima', date: 'Day 2 (小豆島)', inTime: '16:00', outTime: '10:00', map: '364 802 800*16', address: '〒761-4411 香川県小豆郡小豆島町安田甲144-21' },
+      { id: 3, cat: 'Hotel', name: 'Yado Storo', date: 'Day 3 (宇野)', inTime: '19:19', outTime: '07:30', map: '19 082 173*77', address: '〒706-0011 岡山県玉野市宇野2丁目4-8' }
     ];
 
     let expenses = [
-      { id: 1, name: '一鶴骨付鳥晚餐', cat: '美食', jpy: 4800 },
-      { id: 2, name: '栗林公園門票+和船', cat: '景點', jpy: 1220 }
+      { id: 1, name: '四國水族館門票', cat: '景點', jpy: 2600 },
+      { id: 2, name: '丸金醬油紀念館門票', cat: '景點', jpy: 500 },
+      { id: 3, name: '豐島美術館門票', cat: '景點', jpy: 1800 }
     ];
 
     // 初始化頁面
@@ -1052,7 +1121,6 @@
       const rate = 0.0515; // JPY to HKD
       const jpyInput = document.getElementById('calc-jpy');
       const hkdInput = document.getElementById('calc-hkd');
-      const taxStatus = document.getElementById('tax-status');
 
       if (source === 'jpy') {
         const val = parseFloat(jpyInput.value) || 0;
@@ -1115,7 +1183,7 @@
 
     // 航班切換
     function switchFlight(idx) {
-      [1,2,3].forEach(i => document.getElementById(`f-btn-${i}`).classList.toggle('active', i === idx));
+      [1,2].forEach(i => document.getElementById(`f-btn-${i}`).classList.toggle('active', i === idx));
       const f = flights[idx];
       document.getElementById('flight-info-content').innerHTML = `
         <div class="flight-route">
@@ -1156,16 +1224,18 @@
       list.innerHTML = '';
       const dayItems = itineraryData.filter(item => item.day === currentDay);
 
-      dayItems.forEach((item, index) => {
+      dayItems.forEach((item) => {
         const card = document.createElement('div');
         card.className = `item-card ${isReorderMode ? 'reorder-mode' : ''}`;
         
-        // 格式化關鍵字亮顯
+        // 自動替換亮顯文字
         let formattedTips = item.tips || '';
-        formattedTips = formattedTips.replace(/必吃美食[:：]?\s*([^,，\s]+)/g, '<span class="highlight-tag tag-food">🍴 必吃美食 $1</span>');
-        formattedTips = formattedTips.replace(/必點菜單[:：]?\s*([^,，\s]+)/g, '<span class="highlight-tag tag-menu">📜 必點菜單 $1</span>');
-        formattedTips = formattedTips.replace(/必買伴手禮[:：]?\s*([^,，\s]+)/g, '<span class="highlight-tag tag-gift">🎁 必買伴手禮 $1</span>');
-        formattedTips = formattedTips.replace(/重要預約代號[:：]?\s*([^,，\s]+)/g, '<span class="highlight-tag tag-booking">🔑 預約 $1</span>');
+        formattedTips = formattedTips.replace(/必吃美食[:：]?\s*([^,，\s]+)/g, '<span class="highlight-tag tag-food">🍴 必吃: $1</span>');
+        formattedTips = formattedTips.replace(/票價[:：]?\s*([^,，\s]+)/g, '<span class="highlight-tag tag-menu">🎟️ 票價: $1</span>');
+        formattedTips = formattedTips.replace(/重要預約代號[:：]?\s*([^,，\s]+)/g, '<span class="highlight-tag tag-booking">🔑 預約: $1</span>');
+        formattedTips = formattedTips.replace(/情報[:：]?\s*([^,，\n]+)/g, '<span class="highlight-tag tag-info">ℹ️ $1</span>');
+
+        const navQuery = item.address ? item.address : item.title;
 
         card.innerHTML = `
           <div class="reorder-btns">
@@ -1188,8 +1258,10 @@
             <div class="item-title">${item.title}</div>
             <div>${formattedTips}</div>
             ${item.mapcode ? `<div class="mapcode-text"><i class="fa-solid fa-location-dot"></i> MAP: ${item.mapcode}</div>` : ''}
+            ${item.phone ? `<div class="mapcode-text"><i class="fa-solid fa-phone"></i> ${item.phone}</div>` : ''}
+            ${item.address ? `<div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${item.address}</div>` : ''}
             ${item.notes ? `<div style="font-size:13px; color:var(--text-muted); margin-top:4px;">${item.notes}</div>` : ''}
-            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.title)}" target="_blank" class="nav-link-btn">
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(navQuery)}" target="_blank" class="nav-link-btn">
               <i class="fa-solid fa-diamond-turn-right"></i> 導航
             </a>
           </div>
@@ -1215,7 +1287,6 @@
       renderItinerary();
     }
 
-    // Modal 與 FAB 邏輯
     function handleFabClick() {
       if (currentTab === 'itinerary') openItineraryModal();
       else if (currentTab === 'accommodation') openAccModal();
@@ -1236,14 +1307,18 @@
         document.getElementById('modal-title').value = item.title;
         document.getElementById('modal-start').value = item.start;
         document.getElementById('modal-end').value = item.end;
-        document.getElementById('modal-mapcode').value = item.mapcode;
-        document.getElementById('modal-tips').value = item.tips;
-        document.getElementById('modal-notes').value = item.notes;
+        document.getElementById('modal-mapcode').value = item.mapcode || '';
+        document.getElementById('modal-phone').value = item.phone || '';
+        document.getElementById('modal-address').value = item.address || '';
+        document.getElementById('modal-tips').value = item.tips || '';
+        document.getElementById('modal-notes').value = item.notes || '';
       } else {
         document.getElementById('modal-title').value = '';
         document.getElementById('modal-start').value = '10:00';
         document.getElementById('modal-end').value = '11:00';
         document.getElementById('modal-mapcode').value = '';
+        document.getElementById('modal-phone').value = '';
+        document.getElementById('modal-address').value = '';
         document.getElementById('modal-tips').value = '';
         document.getElementById('modal-notes').value = '';
       }
@@ -1255,15 +1330,17 @@
       const start = document.getElementById('modal-start').value || '09:00';
       const end = document.getElementById('modal-end').value || '10:00';
       const mapcode = document.getElementById('modal-mapcode').value;
+      const phone = document.getElementById('modal-phone').value;
+      const address = document.getElementById('modal-address').value;
       const tips = document.getElementById('modal-tips').value;
       const notes = document.getElementById('modal-notes').value;
 
       if (editingItineraryId) {
         const item = itineraryData.find(i => i.id === editingItineraryId);
-        Object.assign(item, { cat: selectedCat, title, start, end, mapcode, tips, notes });
+        Object.assign(item, { cat: selectedCat, title, start, end, mapcode, phone, address, tips, notes });
       } else {
         itineraryData.push({
-          id: Date.now(), day: currentDay, cat: selectedCat, title, start, end, mapcode, tips, notes
+          id: Date.now(), day: currentDay, cat: selectedCat, title, start, end, mapcode, phone, address, tips, notes
         });
       }
       closeModal('modal-itinerary');
@@ -1288,11 +1365,9 @@
           </div>
           <div style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">${acc.date}</div>
           <div style="font-size:14px;"><strong>Check-in:</strong> ${acc.inTime} | <strong>Check-out:</strong> ${acc.outTime}</div>
-          <div style="font-size:14px; margin-top:4px;"><strong>Confirmation:</strong> ${acc.conf}</div>
-          ${acc.map ? `<div style="font-size:13px; color:var(--text-muted); margin-top:4px;"><i class="fa-solid fa-location-dot"></i> ${acc.map}</div>` : ''}
-          ${acc.notice ? `<div style="color:#e74c3c; font-size:13px; margin-top:6px; font-weight:600;">⚠️ ${acc.notice}</div>` : ''}
-          <div style="font-size:13px; margin-top:4px;">房型：${acc.type}</div>
-          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(acc.name)}" target="_blank" class="nav-link-btn">
+          ${acc.map ? `<div style="font-size:13px; color:var(--text-muted); margin-top:4px;"><i class="fa-solid fa-location-dot"></i> MAP: ${acc.map}</div>` : ''}
+          ${acc.address ? `<div style="font-size:13px; color:var(--text-muted); margin-top:4px;">${acc.address}</div>` : ''}
+          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(acc.address || acc.name)}" target="_blank" class="nav-link-btn">
             <i class="fa-solid fa-diamond-turn-right"></i> 導航
           </a>
         `;
@@ -1309,10 +1384,8 @@
         document.getElementById('acc-date').value = item.date;
         document.getElementById('acc-in').value = item.inTime;
         document.getElementById('acc-out').value = item.outTime;
-        document.getElementById('acc-conf').value = item.conf;
-        document.getElementById('acc-map').value = item.map;
-        document.getElementById('acc-notice').value = item.notice;
-        document.getElementById('acc-type').value = item.type;
+        document.getElementById('acc-map').value = item.map || '';
+        document.getElementById('acc-address').value = item.address || '';
       }
       modal.classList.add('active');
     }
@@ -1322,16 +1395,14 @@
       const date = document.getElementById('acc-date').value || 'Day 1';
       const inTime = document.getElementById('acc-in').value || '15:00';
       const outTime = document.getElementById('acc-out').value || '11:00';
-      const conf = document.getElementById('acc-conf').value || '-';
       const map = document.getElementById('acc-map').value || '';
-      const notice = document.getElementById('acc-notice').value || '';
-      const type = document.getElementById('acc-type').value || '';
+      const address = document.getElementById('acc-address').value || '';
 
       if (editingAccId) {
         const item = accommodationData.find(a => a.id === editingAccId);
-        Object.assign(item, { name, date, inTime, outTime, conf, map, notice, type });
+        Object.assign(item, { name, date, inTime, outTime, map, address });
       } else {
-        accommodationData.push({ id: Date.now(), cat: selectedCat, name, date, inTime, outTime, conf, map, notice, type });
+        accommodationData.push({ id: Date.now(), cat: selectedCat, name, date, inTime, outTime, map, address });
       }
       closeModal('modal-accommodation');
       renderAccommodation();
